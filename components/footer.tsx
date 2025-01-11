@@ -7,8 +7,7 @@ const Footer: React.FC = () => {
     <footer className="bg-white-50 border-t border-gray-200 py-20 pb-20">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
-          {/* Branding Section */}
-          {/* Branding Section */}
+
           <div className="mb-6 md:mb-0 flex items-center">
             {/* <img src="/l3.png" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" /> */}
             <div>
@@ -35,17 +34,17 @@ const Footer: React.FC = () => {
               <h4 className="font-medium text-black-900 mb-3">Home</h4>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/pricing" className="text-black-900 hover:text-black-900">T-shirts</Link>
+                  <Link href="/pricing" className="text-black-900 hover:text-black-900">about</Link>
                 </li>
                 <li>
-                  <Link href="/components" className="text-black-900 hover:text-gray-900">shirts</Link>
+                  <Link href="/components" className="text-black-900 hover:text-gray-900">blogs</Link>
                 </li>
                 <li>
-                  <Link href="/templates" className="text-black-900 hover:text-gray-900">Jeans</Link>
+                  <Link href="/templates" className="text-black-900 hover:text-gray-900">contactUs</Link>
                 </li>
               </ul>
             </div>
-            <div>
+            {/* <div>
               <h4 className="font-medium text-black-900 mb-3">Company</h4>
               <ul className="space-y-2">
                 <li>
@@ -54,7 +53,7 @@ const Footer: React.FC = () => {
 
 
               </ul>
-            </div>
+            </div> */}
             <div>
               <h4 className="font-medium text-black-900 mb-3">Social</h4>
               <ul className="space-y-2">

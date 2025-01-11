@@ -6,38 +6,38 @@ import { FollowerPointerCard } from "@/components/ui/following-pointer";
 export default function FollowingPointerDemo() {
   const blogs = [
     {
-      slug: "amazing-tailwindcss-grid-layouts",
-      author: "Manu Arora",
+      slug: "The Impact of Cricket in My Life",
+      author: "Dhruv Triapthi",
       date: "28th March, 2023",
-      title: "Amazing Tailwindcss Grid Layout Examples",
+      title: "The Impact of Cricket in My Life",
       description:
-        "Grids are cool, but Tailwindcss grids are cooler. In this article, we will learn how to create amazing Grid layouts with Tailwindcs grid and React.",
+        "Cricket is more than just a sport; it’s a journey of passion, discipline, and growth. In this blog, I’ll explore how cricket has shaped my perspective, instilled invaluable life lessons, and created memories that last a lifetime. From teamwork to perseverance, discover the profound influence cricket has had on my personal and professional life.",
       image: "/demo/thumbnail.png",
       authorAvatar: "/manu.png",
     },
     {
-      slug: "responsive-design-tailwindcss",
+      slug: "Learning new Technologies",
       author: "Dhruv Tripathi",
       date: "15th April, 2023",
-      title: "Responsive Design with Tailwindcss",
+      title: " Embracing the Journey of Learning New Technologies",
       description:
-        "Learn how to create responsive designs effortlessly using Tailwindcss in this comprehensive guide.",
+        "In a world driven by innovation, learning new technologies has become essential for personal and professional growth. This blog delves into the excitement and challenges of staying updated, the strategies to effectively master new tools, and the mindset needed to thrive in a tech-driven era. Join me as I share insights and experiences on staying ahead in an ever-evolving digital landscape.",
       image: "/demo/thumbnail2.png",
       authorAvatar: "/dhruv.png",
     },
     {
       slug: "tailwindcss-best-practices",
-      author: "Kavya Shah",
+      author: "Dhruv Tripathi",
       date: "5th May, 2023",
       title: "Best Practices for Tailwindcss",
       description:
         "Discover the best practices to follow when building scalable and maintainable projects with Tailwindcss.",
-      image: "/demo/thumbnail3.png",
+      image: "/demo/cric.jpg",
       authorAvatar: "/kavya.png",
     },
     {
       slug: "blog page",
-      author: "dhruv tripathi",
+      author: "Dhruv tripathi",
       date: "5th May, 2025",
       title: "Best Practices for Tailwindcss",
       description:
@@ -48,7 +48,7 @@ export default function FollowingPointerDemo() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto py-40">
       {blogs.map((blog) => (
         <FollowerPointerCard
           key={blog.slug}

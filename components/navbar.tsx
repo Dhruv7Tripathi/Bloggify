@@ -31,7 +31,13 @@ export default function Navbar() {
             href="#contactus"
             className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
           >
-            Contact Us
+            ContactUs
+          </Link>
+          <Link
+            href="/blog"
+            className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+          >
+            Blog
           </Link>
         </nav>
 
