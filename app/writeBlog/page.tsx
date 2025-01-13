@@ -1,78 +1,146 @@
-// pages/add-post.tsx
-"use client"
-import React, { useState } from 'react';
-// import { useRouter } from 'next/router';
+'use client';
 
-const AddPost: React.FC = () => {
+import { useEffect, useState } from 'react';
+import { PlusCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+}
+
+export default function Home() {
+  const [posts, setPosts] = useState<Post[]>([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  // const router = useRouter();
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  // e.preventDefault();
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
-  // Here you would typically send the data to your backend API
-  // const postData = { title, content };
+  const fetchPosts = async () => {
+    const response = await fetch('/api/posts');
+    const data: Post[] = await response.json();
+    setPosts(data);
+  };
 
-  // Example API call (replace with your actual API endpoint)
-  // const response = await fetch('/api/posts', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(postData),
-  // });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  // if (response.ok) {
-  //   // Redirect to the blog posts page or show a success message
-  //   router.push('/posts');
-  // } else {
-  //   // Handle error
-  //   console.error('Failed to add post');
-  // }
+    if (editingPost) {
+      await fetch(`/api/posts/${editingPost.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content }),
+      });
+      setEditingPost(null);
+    } else {
+      await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content }),
+      });
+    }
+
+    setTitle('');
+    setContent('');
+    fetchPosts();
+  };
+
+  // const handleDelete = async (id: string) => {
+  //   await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+  //   fetchPosts();
+  // };
+
+  // const handleEdit = (post: Post) => {
+  //   setEditingPost(post);
+  //   setTitle(post.title);
+  //   setContent(post.content);
   // };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Add New Blog Post</h1>
-      <form >
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-            Content
-          </label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-            rows={10}
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Add Post
-        </button>
-      </form>
+    <div className="container mx-auto py-8">
+      <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>{editingPost ? 'Edit Post' : 'Create New Post'}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              placeholder="Post title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+            <Textarea
+              placeholder="Write your post content..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+              className="min-h-[100px]"
+            />
+            <div className="flex gap-2">
+              <Button type="submit">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                {editingPost ? 'Update Post' : 'Create Post'}
+              </Button>
+              {editingPost && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setEditingPost(null);
+                    setTitle('');
+                    setContent('');
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* <div className="grid gap-4">
+        {posts.map((post) => (
+          <Card key={post.id}>
+            <CardHeader>
+              <CardTitle>{post.title}</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                {new Date(post.created_at).toLocaleDateString()}
+              </p>
+            </CardHeader>
+            <CardContent>
+              <p className="whitespace-pre-wrap">{post.content}</p>
+              <div className="flex gap-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleEdit(post)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => handleDelete(post.id)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div> */}
     </div>
   );
-};
-
-export default AddPost;
-
-
+}
