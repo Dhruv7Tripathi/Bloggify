@@ -5,20 +5,6 @@ export const dynamic = 'force-dynamic';
 
 const prisma = new PrismaClient();
 
-export async function GET() {
-  try {
-    // Fetch all posts ordered by `createdAt` in descending order
-    const posts = await prisma.post.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-
-    return NextResponse.json(posts);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
 
 export async function POST(request: Request) {
   try {
@@ -35,5 +21,35 @@ export async function POST(request: Request) {
     return NextResponse.json(newPost);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+export async function GET() {
+  try {
+    // Fetch all posts ordered by `createdAt` in descending order
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return NextResponse.json(posts);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+export async function DELETE(
+  _request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Delete the post from the database
+    await prisma.post.delete({
+      where: { id: params.id },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    // Return error response if something goes wrong
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

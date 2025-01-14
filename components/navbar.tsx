@@ -16,19 +16,19 @@ export default function Navbar() {
         {/* Navigation Section */}
         <nav className="hidden md:flex gap-6 text-gray-700 dark:text-gray-300">
           <Link
-            href="#meet"
+            href="/"
             className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
           >
             Home
           </Link>
           <Link
-            href="#about"
+            href="/about"
             className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
           >
             About
           </Link>
           <Link
-            href="#contactus"
+            href="/contactus"
             className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
           >
             ContactUs
