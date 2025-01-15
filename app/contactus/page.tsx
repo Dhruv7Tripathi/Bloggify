@@ -59,15 +59,15 @@ export default function ContactPage() {
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
                 <MailIcon className="h-6 w-6 text-primary" />
-                <span>contact@yourblog.com</span>
+                <span>contact@kaiblog.com</span>
               </div>
               <div className="flex items-center space-x-4">
                 <PhoneIcon className="h-6 w-6 text-primary" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 (555) 123-4567</span>
               </div>
               <div className="flex items-center space-x-4">
                 <MapPinIcon className="h-6 w-6 text-primary" />
-                <span>123 Blog Street, Content City, 12345</span>
+                <span> near GLA University Mathura</span>
               </div>
             </div>
           </div>

@@ -65,7 +65,7 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-20">
       <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
 
       <Card className="mb-8">
