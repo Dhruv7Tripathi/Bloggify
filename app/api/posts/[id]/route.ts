@@ -1,19 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-// Global Prisma client instance to avoid creating multiple instances in serverless functions
-interface GlobalPrisma {
-  prisma?: PrismaClient;
-}
+import prisma from "@/lib/db";
 
 interface Params {
   params: Promise<{ id: string }>
 }
 
-declare const global: GlobalPrisma;
-
-const prisma = global.prisma || new PrismaClient();
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
 
 export async function PUT(request: NextRequest, { params }: Params) {
   const id = (await params).id;
@@ -28,14 +19,13 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     return NextResponse.json(updatedPost);
   } catch (error) {
-    // Return error response if something goes wrong
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
 
 export async function GET(request: NextRequest, { params }: Params) {
   try {
-    const id = (await params).id; // Destructure params correctly
+    const id = (await params).id;
 
     if (!id) {
       return NextResponse.json(
