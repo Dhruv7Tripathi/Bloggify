@@ -7,9 +7,7 @@ interface GlobalPrisma {
 }
 
 interface Params {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>
 }
 
 declare const global: GlobalPrisma;
@@ -18,12 +16,13 @@ const prisma = global.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
 
 export async function PUT(request: NextRequest, { params }: Params) {
+  const id = (await params).id;
   const { title, content } = await request.json();
 
   try {
     // Update the post in the database
     const updatedPost = await prisma.post.update({
-      where: { id: params.id },
+      where: { id },
       data: { title, content },
     });
 
@@ -36,7 +35,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
 export async function GET(request: NextRequest, { params }: Params) {
   try {
-    const { id } = params; // Destructure `params` correctly
+    const  id =(await params).id; // Destructure `params` correctly
 
     if (!id) {
       return NextResponse.json(
