@@ -9,7 +9,7 @@ const HeroSection: React.FC = () => {
           The Mindful Scroll: Insights, Stories, and Inspiration
         </h1>
         <p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
-          Dive into a world of ideas and inspiration with 'The Mindful Scroll.' A curated blog that brings you thought-provoking insights, captivating stories, and practical tips on topics you care about. From personal growth and lifestyle to tech trends and creativity, we’ve got your curiosity covered. Discover, reflect, and stay inspired.
+          Dive into a world of ideas and inspiration with &apos;The Mindful Scroll.&apos; A curated blog that brings you thought-provoking insights, captivating stories, and practical tips on topics you care about. From personal growth and lifestyle to tech trends and creativity, we’ve got your curiosity covered. Discover, reflect, and stay inspired.
 
         </p>
         <div className="mt-6 sm:mt-10 flex justify-center space-x-6 text-sm">

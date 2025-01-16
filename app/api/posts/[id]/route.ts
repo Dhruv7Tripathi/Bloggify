@@ -1,11 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
-export const dynamic = 'force-dynamic';
 
 // Global Prisma client instance to avoid creating multiple instances in serverless functions
 interface GlobalPrisma {
   prisma?: PrismaClient;
+}
+
+interface Params {
+  params: {
+    id: string;
+  };
 }
 
 declare const global: GlobalPrisma;
@@ -13,10 +17,7 @@ declare const global: GlobalPrisma;
 const prisma = global.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: Params) {
   const { title, content } = await request.json();
 
   try {
@@ -33,19 +34,36 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  _request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: Params) {
   try {
-    // Delete the post from the database
-    await prisma.post.delete({
-      where: { id: params.id },
+    const { id } = params; // Destructure `params` correctly
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: 'ID is missing in the request params' },
+        { status: 400 }
+      );
+    }
+
+    const deletedPost = await prisma.post.delete({
+      where: { id },
     });
 
-    return NextResponse.json({ success: true });
+    if (!deletedPost) {
+      return NextResponse.json(
+        { success: false, message: 'Post not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: 'Post deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
-    // Return error response if something goes wrong
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: 'Internal Server Error: ' + (error as Error).message },
+      { status: 500 }
+    );
   }
 }

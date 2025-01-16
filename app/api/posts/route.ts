@@ -19,8 +19,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(newPost);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Internal Server error" + error }, { status: 500 });
   }
 }
 export async function GET() {
@@ -33,8 +33,8 @@ export async function GET() {
     });
 
     return NextResponse.json(posts);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Internal Server error" + error }, { status: 500 });
   }
 }
 export async function DELETE(
