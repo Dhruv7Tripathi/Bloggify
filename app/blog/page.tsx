@@ -25,9 +25,16 @@ export default function Home() {
   }, []);
 
   const fetchPosts = async () => {
-    const response = await fetch('/api/posts');
-    const data = await response.json();
-    setPosts(data);
+    try {
+      const response = await fetch('/api/posts');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error('Failed to fetch posts:', error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
