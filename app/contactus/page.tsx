@@ -33,7 +33,7 @@ export default function ContactPage() {
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -51,8 +51,8 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
               <p className="text-muted-foreground mb-8">
-                Have questions or feedback? We'd love to hear from you. Send us a
-                message and we'll respond as soon as possible.
+                Have questions or feedback? We&apos;d love to hear from you. Send us a
+                message and we&apos;ll respond as soon as possible.
               </p>
             </div>
 

@@ -1,6 +1,5 @@
 'use client';
 
-import { GithubIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
 import Image from 'next/image';
 
 export default function AboutPage() {
@@ -22,13 +21,13 @@ export default function AboutPage() {
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold">Our Story</h2>
             <p className="text-muted-foreground">
-              Welcome to our blog! We're passionate about sharing knowledge and insights
+              Welcome to our blog! We&apos;re passionate about sharing knowledge and insights
               about technology, development, and digital innovation. Our mission is to
               create valuable content that helps developers and tech enthusiasts stay
               ahead in this ever-evolving industry.
             </p>
             <p className="text-muted-foreground">
-              Founded in 2024, we've been committed to delivering high-quality articles,
+              Founded in 2024, we&apos;ve been committed to delivering high-quality articles,
               tutorials, and industry insights to our growing community of readers.
             </p>
           </div>
