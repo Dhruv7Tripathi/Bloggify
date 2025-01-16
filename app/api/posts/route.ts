@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 }
 export async function GET() {
   try {
-    // Fetch all posts ordered by `createdAt` in descending order
+    // Fetch all posts ordered by createdAt in descending order
     const posts = await prisma.post.findMany({
       orderBy: {
         createdAt: 'desc',
