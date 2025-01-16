@@ -53,16 +53,16 @@ export default function Home() {
     fetchPosts();
   };
 
-  // const handleDelete = async (id: string) => {
-  //   await fetch(`/api/posts/${id}`, { method: 'DELETE' });
-  //   fetchPosts();
-  // };
+  const handleDelete = async (id: string) => {
+    await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+    fetchPosts();
+  };
 
-  // const handleEdit = (post: Post) => {
-  //   setEditingPost(post);
-  //   setTitle(post.title);
-  //   setContent(post.content);
-  // };
+  const handleEdit = (post: Post) => {
+    setEditingPost(post);
+    setTitle(post.title);
+    setContent(post.content);
+  };
 
   return (
     <div className="container mx-auto py-30 mt-14 ">
@@ -110,7 +110,7 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* <div className="grid gap-4">
+      <div className="grid gap-4">
         {posts.map((post) => (
           <Card key={post.id}>
             <CardHeader>
@@ -140,7 +140,7 @@ export default function Home() {
             </CardContent>
           </Card>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }

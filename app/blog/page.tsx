@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+    await fetch(`/api/posts/${id}`, { method: 'GET' });
     fetchPosts();
   };
 
