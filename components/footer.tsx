@@ -9,9 +9,9 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
 
           <div className="mb-6 md:mb-0 flex items-center">
-            {/* <img src="/l3.png" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" /> */}
+            <img src="/logo.jpg" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
             <div>
-              <h3 className="text-2xl font-semibold text-blue-600 dark:text-blue-400">KaiBlog</h3>
+              <h3 className="text-2xl font-semibold text-blue-600 dark:text-blue-400">Blogify</h3>
 
               <p className="text-black-900 text-sm">
                 Building in public at{' '}
