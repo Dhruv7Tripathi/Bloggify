@@ -18,7 +18,6 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      // Replace with your email handling logic
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -46,7 +45,7 @@ export default function ContactPage() {
         <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
 
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Information */}
+
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
@@ -72,7 +71,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="bg-card p-8 rounded-lg shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

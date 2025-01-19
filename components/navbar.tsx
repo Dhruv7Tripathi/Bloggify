@@ -16,7 +16,7 @@ export default function Navbar() {
         {/* Logo Section */}
         <div className="text-l font-bold">
           <Link href="/" className="flex items-center">
-            <img src="/logo.jpg" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
+            <img src="/logo.webp" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
             <span className="text-blue-600 dark:text-blue-400">Blogify</span>
           </Link>
         </div>

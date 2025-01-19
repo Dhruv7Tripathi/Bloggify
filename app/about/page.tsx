@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-
+import { FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa';
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background py-20">
@@ -35,17 +35,17 @@ export default function AboutPage() {
 
         <div className="text-center space-y-6">
           <h2 className="text-2xl font-semibold">Connect With Us</h2>
-          {/* <div className="flex justify-center gap-6">
-            <a href="#" className="hover:text-primary transition-colors">
-              <TwitterIcon className="h-6 w-6" />
+          <div className="flex justify-center gap-6">
+            <a href="https://twitter.com/dhruvtripathi" className="hover:text-primary transition-colors">
+              <FaTwitter className="h-6 w-6" />
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              <GithubIcon className="h-6 w-6" />
+            <a href="https://github.com/Dhruv7Tripathi" className="hover:text-primary transition-colors">
+              <FaGithub className="h-6 w-6" />
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              <LinkedinIcon className="h-6 w-6" />
+            <a href="https://www.linkedin.com/in/dhruv-tripathi-9848792aa/" className="hover:text-primary transition-colors">
+              <FaLinkedin className="h-6 w-6" />
             </a>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
