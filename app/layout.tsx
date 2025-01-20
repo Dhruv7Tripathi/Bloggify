@@ -39,7 +39,6 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
       </body>
-      {/* <NavBar /> */}
     </html>
   );
 }
