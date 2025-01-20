@@ -34,10 +34,10 @@ const Footer: React.FC = () => {
                   <Link href="/about" className="text-black-900 hover:text-black-900">about</Link>
                 </li>
                 <li>
-                  <Link href="/blogs" className="text-black-900 hover:text-black-900">blogs</Link>
+                  <Link href="/blog" className="text-black-900 hover:text-black-900">blogs</Link>
                 </li>
                 <li>
-                  <Link href="/contactUs" className="text-black-900 hover:text-black-900">contactUs</Link>
+                  <Link href="/contactus" className="text-black-900 hover:text-black-900">contactUs</Link>
                 </li>
               </ul>
             </div>
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
                   <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-black-900 hover:text-black-900">Twitter</a>
                 </li>
                 <li>
-                  <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="text-black-900 hover:text-black-900">Linkdin</a>
+                  <a href="https://www.linkedin.com/in/dhruv-tripathi-9848792aa/" target="_blank" rel="noopener noreferrer" className="text-black-900 hover:text-black-900">Linkdin</a>
                 </li>
               </ul>
             </div>
