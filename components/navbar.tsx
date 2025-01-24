@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ModeToggle } from "./ui/DarkMode";
 import { Menu as HamIcon } from "lucide-react";
@@ -8,8 +10,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
+import SignIn from "@/app/signin/page";
+import { useSession } from "next-auth/react";
+import UserAccountNav from "./userAccountNav";
+import SignInButton from "./SIgnInButton";
 export default function Navbar() {
+  const { data: session } = useSession();
   return (
     <header className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 bg-opacity-50 backdrop-blur-lg border-b shadow-sm z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
@@ -47,10 +53,15 @@ export default function Navbar() {
           </Link>
         </nav>
         <div className="hidden md:flex items-center gap-4">
-          <button className="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+          {/* <button className="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
             Login
-          </button>
+          </button> */}
           <ModeToggle />
+          {session?.user ? (
+            <UserAccountNav user={session.user} />
+          ) : (
+            <SignInButton text={"Sign In"} />
+          )}
         </div>
         <div className="md:hidden">
           <Sheet>
@@ -88,9 +99,11 @@ export default function Navbar() {
                 </Link>
               </nav>
               <div className="mt-6 flex flex-col gap-4">
-                {/* <button className="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
-                  Login
-                </button> */}
+                {session?.user ? (
+                  <UserAccountNav user={session.user} />
+                ) : (
+                  <SignInButton text={"Sign In"} />
+                )}
                 <ModeToggle />
               </div>
             </SheetContent>

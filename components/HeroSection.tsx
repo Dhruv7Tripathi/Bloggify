@@ -1,6 +1,5 @@
 // components/HeroSection.tsx
 import React from 'react';
-import Cards from './cards';
 const HeroSection: React.FC = () => {
   return (
     <>
@@ -22,7 +21,6 @@ const HeroSection: React.FC = () => {
 
         </div>
       </div>
-      <Cards />
     </>
   );
 };
