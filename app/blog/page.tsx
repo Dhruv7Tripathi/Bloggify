@@ -24,8 +24,9 @@ export default function Home() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const { data: session, status } = useSession();
   const router = useRouter();
-
-  // Redirect unauthenticated users
+  useEffect(() => {
+    console.log('Session:', session);
+  }, [session]);
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/signin');
@@ -33,39 +34,31 @@ export default function Home() {
       fetchPosts();
     }
   }, [status]);
-
-  // Fetch posts
   const fetchPosts = async () => {
     try {
       const response = await axios.get('/api/posts');
-      setPosts(response.data.posts || []); // Ensure response format is consistent
+      setPosts(response.data.posts || []);
     } catch (error: any) {
       console.log('Failed to fetch posts:', error.response?.data || error.message);
     }
   };
-
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (status !== 'authenticated' || !session?.user?.id) {
+    if (status !== 'authenticated') {
       console.log('User not authenticated or missing session user ID');
       return;
     }
-
-    // Validate input
     if (!title.trim() || !content.trim()) {
       console.error('Title or content cannot be empty');
       return;
     }
-
     try {
       if (editingPost) {
         await axios.put(`/api/posts/${editingPost.id}`, { title, content });
         setEditingPost(null);
       } else {
-        // Create post
         await axios.post('/api/posts', {
-          userId: session?.user.id, // Ensure the user ID is being sent
+          userId: session?.user?.id,
           title,
           content,
         });
