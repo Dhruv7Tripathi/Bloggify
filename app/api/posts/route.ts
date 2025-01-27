@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
-    // Parse and validate the request body
     const reqBody = await req.json();
     const { userId, title, content } = reqBody;
 
@@ -30,8 +29,6 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Create the post in the database
     const post = await prisma.post.create({
       data: {
         content,

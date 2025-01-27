@@ -10,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import SignIn from "@/app/signin/page";
 import { useSession } from "next-auth/react";
 import UserAccountNav from "./userAccountNav";
 import SignInButton from "./SIgnInButton";
@@ -53,9 +52,6 @@ export default function Navbar() {
           </Link>
         </nav>
         <div className="hidden md:flex items-center gap-4">
-          {/* <button className="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
-            Login
-          </button> */}
           <ModeToggle />
           {session?.user ? (
             <UserAccountNav user={session.user} />

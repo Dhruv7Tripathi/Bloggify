@@ -28,9 +28,6 @@ const SignInComponent = () => {
           </div>
         </div>
         <CardHeader>
-          {/* <CardTitle className="pb-3 pt-2 text-center text-[30px] font-bold text-black">
-            Sign in
-          </CardTitle> */}
           <CardTitle className="text-center text-3xl font-bold text-gray-800 dark:text-gray-900">
             Welcome
           </CardTitle>
