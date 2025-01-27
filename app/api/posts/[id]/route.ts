@@ -7,9 +7,14 @@ interface Params {
 
 
 export async function PUT(request: NextRequest, { params }: Params) {
-  const id = (await params).id;
+  const { id } = await params;
   const { title, content } = await request.json();
-
+  if (!id) {
+    return NextResponse.json(
+      { success: false, message: "ID is missing in the request params" },
+      { status: 400 }
+    );
+  }
   try {
     // Update the post in the database
     const updatedPost = await prisma.post.update({
