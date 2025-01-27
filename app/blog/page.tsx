@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -33,15 +33,16 @@ export default function Home() {
     } else if (status === 'authenticated') {
       fetchPosts();
     }
-  }, [status]);
+  }, [status, router]);
 
   const fetchPosts = async () => {
     try {
       const response = await axios.get('/api/posts');
       setPosts(response.data.posts || []);
-    } catch (error: any) {
-      console.error('Failed to fetch posts:', error.response?.data || error.message);
-      setError('Failed to fetch posts. Please try again later.');
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      console.error('Failed to fetch posts:', axiosError.response?.data || axiosError.message);
+      setError(axiosError.response?.data?.message || 'Failed to fetch posts. Please try again later.');
     }
   };
 
@@ -82,9 +83,10 @@ export default function Home() {
       }
       setTitle('');
       setContent('');
-    } catch (error: any) {
-      console.error('Failed to submit post:', error.response?.data || error.message);
-      setError(error.response?.data?.message || 'Failed to submit post.');
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      console.error('Failed to submit post:', axiosError.response?.data || axiosError.message);
+      setError(axiosError.response?.data?.message || 'Failed to submit post.');
     } finally {
       setLoading(false);
     }
@@ -95,9 +97,10 @@ export default function Home() {
     try {
       await axios.delete(`/api/posts/${id}`);
       setPosts((prev) => prev.filter((post) => post.id !== id)); // Optimistic update
-    } catch (error: any) {
-      console.error('Failed to delete post:', error.response?.data || error.message);
-      setError('Failed to delete post. Please try again later.');
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      console.error('Failed to delete post:', axiosError.response?.data || axiosError.message);
+      setError(axiosError.response?.data?.message || 'Failed to delete post. Please try again later.');
     }
   };
 

@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-
+import Image from 'next/image';
 const Footer: React.FC = () => {
   return (
     <footer className="bg-white-50 border-t border-gray-200 py-20 pb-20">
@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
 
           <div className="mb-6 md:mb-0 flex items-center">
-            <img src="/logo.webp" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
+            <Image src="/logo.webp" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
             <div>
               <h3 className="text-2xl font-semibold text-blue-600 dark:text-blue-400">Blogify</h3>
 
