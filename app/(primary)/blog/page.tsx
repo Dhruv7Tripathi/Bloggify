@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 
 interface Post {
   id: string;
+  timestamp: Date;
   title: string;
   content: string;
   created_at: string;
