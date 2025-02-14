@@ -75,8 +75,9 @@ export default function Home() {
           content,
           userId: session.user.id
         });
-
-        // Update the posts array with the updated post
+        if (!response.data?.data) {
+          throw new Error('Failed to update post: Backend did not return updated post data.');
+        }
         setPosts(prev => prev.map(post =>
           post.id === editingPost.id
             ? { ...post, title, content, updated_at: new Date().toISOString() }

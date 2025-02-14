@@ -14,7 +14,7 @@ const HeroSection: React.FC = () => {
           </span>
         </h1>
         <p className="mt-8 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          Dive into a world of ideas and inspiration with <span className="font-semibold text-gray-900 dark:text-white">'The Mindful Scroll.'</span> A curated blog that brings you thought-provoking insights, captivating stories, and practical tips on topics you care about.
+          Dive into a world of ideas and inspiration with <span className="font-semibold text-gray-900 dark:text-white">The Mindful Scroll.</span> A curated blog that brings you thought-provoking insights, captivating stories, and practical tips on topics you care about.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
