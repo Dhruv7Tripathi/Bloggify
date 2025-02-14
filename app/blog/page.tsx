@@ -67,7 +67,7 @@ export default function Home() {
 
     try {
       if (editingPost) {
-        await axios.put(`/api/posts/${editingPost.id}`, { title, content });
+        await axios.put(`/api/posts/update/${editingPost.id}`, { title, content });
         setEditingPost(null);
       } else {
         const response = await axios.post('/api/posts', {
@@ -95,7 +95,7 @@ export default function Home() {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`/api/posts/${id}`);
+      await axios.delete(`/api/posts/delete/${id}`);
       setPosts((prev) => prev.filter((post) => post.id !== id)); // Optimistic update
     } catch (error: unknown) {
       const axiosError = error as AxiosError<{ message: string }>;
