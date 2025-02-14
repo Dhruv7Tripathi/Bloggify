@@ -1,62 +1,56 @@
+"use client"
+import Link from 'next/link'
+import React from 'react'
+import Image from 'next/image'
 
-import Link from 'next/link';
-import Image from 'next/image';
-const Footer: React.FC = () => {
+const Footer = () => {
+
   return (
-    <footer className="bg-white-50 border-t border-gray-200 py-20 pb-20">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
-
-          <div className="mb-6 md:mb-0 flex items-center">
-            <Image src="/logo.webp" alt="logo" className="h-10 w-10 mr-3 rounded-full border border-gray-200" />
-            <div>
-              <h3 className="text-2xl font-semibold text-blue-600 dark:text-blue-400">Blogify</h3>
-
-              <p className="text-black-900 text-sm">
-                Building in public at{' '}
-                <a
-                  href="https://twitter.com/dhruvtripathi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600"
-                >
-                  @dhruvtripathi
-                </a>
-              </p>
-            </div>
+    <div className="border-t border-neutral-100 dark:border-white/[0.1] px-8 py-20 bg-white dark:bg-black">
+      <div className="max-w-[87rem] mx-auto text-sm px-4 text-gray-400 flex sm:flex-row flex-col justify-between items-start ">
+        <div>
+          <div className="mb-4 flex">
+            <Link href="/" className="flex items-center space-x-1">
+              <Image src="/logo.png" width={30} height={30} priority={false} alt="Logo" unoptimized={true} className="rounded-xl" />
+              <span className="text-2xl font-extrabold text-black dark:text-white ">Bloggify</span>
+            </Link>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="font-medium text-black-900 mb-3">Home</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/about" className="text-black-900 hover:text-black-900">about</Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-black-900 hover:text-black-900">blogs</Link>
-                </li>
-                <li>
-                  <Link href="/contactus" className="text-black-900 hover:text-black-900">contactUs</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-black-900 mb-3">Social</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-black-900 hover:text-black-900">Twitter</a>
-                </li>
-                <li>
-                  <a href="https://www.linkedin.com/in/dhruv-tripathi-9848792aa/" target="_blank" rel="noopener noreferrer" className="text-black-900 hover:text-black-900">Linkdin</a>
-                </li>
-              </ul>
-            </div>
+          <div className="mt-2">
+            Building in public at
+            <a className="dark:text-emerald-500 pl-1 font-medium text-neutral-600" target="__blank" href="https://github.com/dhruv7tripathi">@dhruv7tripathi</a>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
+          <div className="flex justify-center space-y-4 flex-col mt-4">
+            <Link href='/'>
+              <p className="hover:text-foreground/80 text-foreground/60">Home</p>
+            </Link>
+            <Link href='/createquiz'>
+              <p className="hover:text-foreground/80 text-foreground/60">createquiz</p>
+            </Link>
+            <Link href='/'>
+              <p className="hover:text-foreground/80 text-foreground/60">Contact</p>
+            </Link>
+            <Link href='/about'>
+              <p className="hover:text-foreground/80 text-foreground/60">About</p>
+            </Link>
+          </div>
+          <div className="flex justify-center space-y-4 flex-col mt-4">
+            <Link href='https://twitter.com/dhruvtripathi' target="_blank">
+              <p className="hover:text-foreground/80 text-foreground/60">Twitter</p>
+            </Link>
+            <Link href='https://www.linkedin.com/in/dhruv-tripathi' target='_blank'>
+              <p className="hover:text-foreground/80 text-foreground/60">LindedIn</p>
+            </Link>
+          </div>
+          <div className="flex justify-center space-y-4 flex-col mt-4">
+            <p className="hover:text-foreground/80 text-foreground/60"><a href='/termsandcondition' target='_blank'>Terms of Service</a></p>
+            <p className="hover:text-foreground/80 text-foreground/60"><a href='/privacypolicy' target='_blank'>Privacy Policy</a></p>
           </div>
         </div>
       </div>
-    </footer>
-  );
-};
+    </div>
+  )
+}
 
-export default Footer;
+export default Footer
