@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blogiffy
 
-## Getting Started
+Blogiffy is a modern, fast, and responsive blog application built using **Next.js**, **TypeScript**, and **Tailwind CSS**. It provides an elegant way to manage and showcase blog posts with a sleek UI and optimized performance.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🚀 **Next.js** for server-side rendering and static site generation.
+- 📝 **TypeScript** for type safety and better development experience.
+- 🎨 **Tailwind CSS** for a fully responsive and beautiful design.
+- 📄 **Ghost CMS Integration** for content management.
+- 🔍 **SEO Optimized** for better search rankings.
+- ⚡ **Fast and Lightweight** for a seamless user experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js, TypeScript, Tailwind CSS
+- **CMS:** Ghost CMS
+- **Database:** PostgreSQL (if needed for additional features)
+- **Hosting:** Vercel (Recommended)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/dhruv7tripathi/blogiffy.git
+   cd blogiffy
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-## Deploy on Vercel
+3. Set up environment variables:
+   Create a `.env.local` file and add the necessary configurations:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```env
+   NEXT_PUBLIC_GHOST_API_URL=your-ghost-api-url
+   NEXT_PUBLIC_GHOST_CONTENT_API_KEY=your-ghost-api-key
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+   The application will be available at `http://localhost:3000`.
+
+## Deployment
+
+To deploy Blogiffy on Vercel, follow these steps:
+
+1. Push your repository to GitHub/GitLab.
+2. Go to [Vercel](https://vercel.com/) and import your repository.
+3. Set up the environment variables in Vercel.
+4. Deploy and enjoy! 🚀
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request to improve Blogiffy.
+
+## License
+
+This project is licensed under the **MIT License**.
+
+---
+
+Made with ❤️ by Dhruv Tripathi
