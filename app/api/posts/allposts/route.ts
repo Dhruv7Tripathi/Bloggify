@@ -1,22 +1,28 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
-
+import { NextResponse } from "next/server"
+import prisma from "@/lib/db" // Assuming you have a prisma client setup
 
 export async function GET() {
   try {
+    // Fetch all posts with user information
     const posts = await prisma.post.findMany({
-      include
-        : {
-        user: true,
-      },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
-    });
-    return NextResponse.json(posts);
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+          },
+        },
+      },
+    })
+
+    return NextResponse.json(posts)
   } catch (error) {
-    return NextResponse.json({ success: false, message: "Internal Server error" + error }, { status: 500 });
+    console.error("Error fetching all posts:", error)
+    return NextResponse.json({ message: "Failed to fetch posts" }, { status: 500 })
   }
 }
+

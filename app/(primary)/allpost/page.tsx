@@ -1,187 +1,166 @@
-'use client';
+"use client"
 
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Search, Clock, ChevronUp, ChevronDown } from 'lucide-react';
-import Image from 'next/image';
-import axios, { AxiosError } from 'axios';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react"
+import { Loader2, Search, ArrowLeft, Share2 } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useRouter } from "next/navigation"
+import axios, { type AxiosError } from "axios"
+import { useSession } from "next-auth/react"
+import SharePostDialog from "@/components/share-post-dialog"
 
 interface Post {
-  id: string;
-  title: string;
-  content: string;
-  created_at: string;
-  timestamp: string;
-  author: {
-    name: string;
-    image?: string;
-  };
+  id: string
+  title: string
+  content: string
+  created_at: string
+  userId: string
+  user?: {
+    name?: string
+    email?: string
+    image?: string
+  }
 }
 
 export default function AllPosts() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const { status } = useSession();
-  const router = useRouter();
-
-  const formatTimestamp = (date: string) => {
-    return new Date(date).toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    });
-  };
+  const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [sharePost, setSharePost] = useState<Post | null>(null)
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/signin');
-    } else if (status === 'authenticated') {
-      fetchPosts();
-    }
-  }, [status, router]);
+    fetchAllPosts()
+  }, [])
 
-  const fetchPosts = async () => {
+  const fetchAllPosts = async () => {
     try {
-      setLoading(true);
-      const response = await axios.get('/api/posts');
-      setPosts(response.data.posts || []);
+      setLoading(true)
+      const response = await axios.get("/api/posts/all")
+      if (response.data) {
+        setPosts(response.data)
+      } else {
+        setPosts([])
+      }
     } catch (error: unknown) {
-      const axiosError = error as AxiosError<{ message: string }>;
-      setError(axiosError.response?.data?.message || 'Failed to fetch posts.');
+      const axiosError = error as AxiosError<{ message: string }>
+      console.error("Failed to fetch posts:", axiosError.response?.data || axiosError.message)
+      setError(axiosError.response?.data?.message || "Failed to fetch posts. Please try again later.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  const toggleSortOrder = () => {
-    setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
-  };
+  const handleShare = (post: Post) => {
+    setSharePost(post)
+  }
 
-  const filteredAndSortedPosts = posts
-    .filter(post =>
+  const filteredPosts = posts.filter(
+    (post) =>
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => {
-      const dateA = new Date(a.timestamp).getTime();
-      const dateB = new Date(b.timestamp).getTime();
-      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-    });
+      post.content.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
 
-  if (status === 'loading' || loading) {
+  // Get user initials for avatar fallback
+  const getInitials = (name?: string, email?: string) => {
+    if (name) {
+      return name
+        .split(" ")
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+        .substring(0, 2)
+    }
+    return email?.[0].toUpperCase() || "U"
+  }
+
+  if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin" />
+        <Loader2 className="w-6 h-6 animate-spin" />
       </div>
-    );
+    )
   }
 
   return (
-    <div className="container mx-auto py-20 px-4">
-      <div className="mb-8 space-y-4">
-        <h1 className="text-4xl font-bold text-center">All Blog Posts</h1>
-        <p className="text-center text-gray-600 dark:text-gray-400">
-          Discover interesting stories and insights
-        </p>
-      </div>
+    <div className="container mx-auto py-6 md:py-10 px-4 md:px-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" onClick={() => router.push("/")} className="h-8 w-8">
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <h1 className="text-3xl md:text-4xl font-bold">All Posts</h1>
+        </div>
 
-      {error && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      <div className="mb-6 flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <div className="w-full md:w-auto relative">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            className="pl-10"
             placeholder="Search posts..."
+            className="pl-8 w-full md:w-[300px]"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button
-          variant="outline"
-          onClick={toggleSortOrder}
-          className="flex items-center gap-2"
-        >
-          Sort by date
-          {sortOrder === 'asc' ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </Button>
-        <Button onClick={() => router.push('/')}>
-          Create New Post
-        </Button>
       </div>
 
-      {filteredAndSortedPosts.length === 0 ? (
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {loading ? (
+        <div className="flex justify-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin" />
+        </div>
+      ) : filteredPosts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">
-            {searchTerm ? 'No posts found matching your search.' : 'No posts available yet.'}
-          </p>
+          <p className="text-muted-foreground">{searchTerm ? "No posts match your search." : "No posts available."}</p>
+          {searchTerm && (
+            <Button variant="outline" className="mt-4" onClick={() => setSearchTerm("")}>
+              Clear Search
+            </Button>
+          )}
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredAndSortedPosts.map((post) => (
+          {filteredPosts.map((post) => (
             <Card key={post.id} className="flex flex-col">
               <CardHeader>
-                <div className="flex items-center justify-between mb-2">
-                  <CardTitle className="line-clamp-1">{post.title}</CardTitle>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <time dateTime={post.timestamp}>
-                    {formatTimestamp(post.timestamp)}
-                  </time>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <p className="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                  {post.content}
-                </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center gap-2">
-                    {post.author.image && (
-                      <Image
-                        src={post.author.image}
-                        alt={post.author.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 rounded-full"
-                      />
-                    )}
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.author.name}
-                    </span>
+                <div className="flex items-center gap-2 mb-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={post.user?.image || ""} alt={post.user?.name || "User"} />
+                    <AvatarFallback>{getInitials(post.user?.name, post.user?.email)}</AvatarFallback>
+                  </Avatar>
+                  <div className="text-sm">
+                    <p className="font-medium">{post.user?.name || post.user?.email || "Anonymous"}</p>
+                    <p className="text-xs text-muted-foreground">{new Date(post.created_at).toLocaleDateString()}</p>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => router.push(`/blog/${post.id}`)}
-                  >
-                    Read more
-                  </Button>
                 </div>
+                <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="whitespace-pre-wrap line-clamp-4">{post.content}</p>
               </CardContent>
+              <CardFooter className="mt-auto pt-4">
+                <Button variant="secondary" size="sm" onClick={() => handleShare(post)} className="ml-auto">
+                  <Share2 className="h-4 w-4 mr-1" />
+                  Share
+                </Button>
+              </CardFooter>
             </Card>
           ))}
         </div>
       )}
+
+      {/* Share Post Dialog */}
+      {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
     </div>
-  );
+  )
 }
+
