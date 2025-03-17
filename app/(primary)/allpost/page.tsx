@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Search, Clock, ChevronUp, ChevronDown } from 'lucide-react';
+import Image from 'next/image';
 import axios, { AxiosError } from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -28,7 +29,7 @@ export default function AllPosts() {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   const formatTimestamp = (date: string) => {
@@ -155,15 +156,17 @@ export default function AllPosts() {
                 </p>
                 <div className="flex items-center justify-between mt-auto">
                   <div className="flex items-center gap-2">
-                    {post.author?.image && (
-                      <img
+                    {post.author.image && (
+                      <Image
                         src={post.author.image}
                         alt={post.author.name}
+                        width={24}
+                        height={24}
                         className="w-6 h-6 rounded-full"
                       />
                     )}
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.author?.name}
+                      {post.author.name}
                     </span>
                   </div>
                   <Button
