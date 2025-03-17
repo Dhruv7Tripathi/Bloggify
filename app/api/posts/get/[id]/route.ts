@@ -1,25 +1,20 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-interface Params {
-  params: Promise<{ id: string }>;
-}
-
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = await params;
+    const { id } = params; // Directly access params.id
 
     if (!id) {
       return NextResponse.json({ success: false, message: "Post ID is missing" }, { status: 400 });
     }
 
     const post = await prisma.post.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        user: true,
-      },
+      where: { id },
+      include: { user: true },
     });
 
     if (!post) {

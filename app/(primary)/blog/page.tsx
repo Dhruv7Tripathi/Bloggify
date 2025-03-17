@@ -42,7 +42,7 @@ export default function Home() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/posts');
+      const response = await axios.get(`/api/posts/allposts`);
       setPosts(response.data.posts || []);
     } catch (error: unknown) {
       const axiosError = error as AxiosError<{ message: string }>;
