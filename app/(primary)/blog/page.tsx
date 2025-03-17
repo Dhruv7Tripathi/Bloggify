@@ -39,15 +39,57 @@ export default function Home() {
     }
   }, [status, router]);
 
+  // const fetchPosts = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const userId = session?.user?.id; // Assuming you want to use the user ID from the session
+  //     const response = await axios.get(`/api/posts/get/${userId}`, {
+  //       params: {
+  //         id: userId,
+  //       },
+  //     });
+  //     setPosts(response.data.posts || []);
+  //   } catch (error: unknown) {
+  //     const axiosError = error as AxiosError<{ message: string }>;
+  //     console.error('Failed to fetch posts:', axiosError.response?.data || axiosError.message);
+  //     setError(axiosError.response?.data?.message || 'Failed to fetch posts. Please try again later.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/posts/allposts`);
-      setPosts(response.data.posts || []);
+      const userId = session?.user?.id;
+
+      if (!userId) {
+        console.error('User ID not available in session');
+        setError('Please log in to view your posts');
+        return;
+      }
+
+      console.log('Fetching posts for user:', userId);
+
+      // Make sure your API route exists and is correctly implemented
+      const response = await axios.get(`/api/posts/user/${userId}`);
+
+      // Check if the response contains data
+      if (response.data) {
+        setPosts(response.data);
+      } else {
+        setPosts([]);
+        console.log('No posts found for this user');
+      }
     } catch (error: unknown) {
       const axiosError = error as AxiosError<{ message: string }>;
-      console.error('Failed to fetch posts:', axiosError.response?.data || axiosError.message);
-      setError(axiosError.response?.data?.message || 'Failed to fetch posts. Please try again later.');
+
+      if (axiosError.response?.status === 404) {
+        console.error('API route not found:', `/api/posts/user/${session?.user?.id}`);
+        setError('The API endpoint for fetching posts does not exist. Please check your server setup.');
+      } else {
+        console.error('Failed to fetch posts:', axiosError.response?.data || axiosError.message);
+        setError(axiosError.response?.data?.message || 'Failed to fetch posts. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }

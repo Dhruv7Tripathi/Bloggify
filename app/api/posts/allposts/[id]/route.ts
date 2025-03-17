@@ -1,13 +1,12 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
+    const { id } = params;
 
     if (!id) {
       return NextResponse.json({ success: false, message: "Post ID is missing" }, { status: 400 });
