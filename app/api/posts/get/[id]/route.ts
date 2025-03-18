@@ -13,7 +13,7 @@ export async function GET(
       return NextResponse.json({ success: false, message: "Post ID is missing" }, { status: 400 });
     }
 
-    const post = await prisma.post.findUnique({
+    const post = await prisma.post.findMany({
       where: { id },
       include: { user: true },
     });

@@ -1,6 +1,5 @@
 import "../globals.css";
-import NavBar from "@/components/navbar";
-import Footer from "@/components/footer";
+import NavigationBar from "@/components/sidebar";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -9,9 +8,10 @@ export default function RootLayout({
   return (
     <div>
       <div>
-        <NavBar />
+        {/* <NavBar /> */}
+        <NavigationBar />
         <main className="">{children}</main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );

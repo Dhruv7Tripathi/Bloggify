@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import UserPanel from "@/components/user-panel"
 import SharePostDialog from "@/components/share-post-dialog"
-import NavigationBar from "@/components/sidebar"
+// import NavigationBar from "@/components/sidebar"
 
 interface Post {
   id: string
@@ -59,6 +59,7 @@ export default function Home() {
       console.log("Fetching posts for user:", userId)
       const response = await axios.get(`/api/posts/get/${encodeURIComponent(userId)}`)
       if (response.data) {
+        console.log("Fetched posts:", response.data)
         setPosts(response.data)
       } else {
         setPosts([])
@@ -190,9 +191,7 @@ export default function Home() {
 
   return (
     <>
-      <NavigationBar />
       <div className="container mx-auto py-6 md:py-10 px-4 md:px-6 md:ml-16 mb-16 md:mb-0">
-        {/* User Panel */}
         {session && <UserPanel user={session.user} />}
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
@@ -201,7 +200,6 @@ export default function Home() {
             View All Posts
           </Button>
         </div>
-
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertDescription>{error}</AlertDescription>
