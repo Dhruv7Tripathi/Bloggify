@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import UserPanel from "@/components/user-panel"
 import SharePostDialog from "@/components/share-post-dialog"
+import NavigationBar from "@/components/sidebar"
 
 interface Post {
   id: string
@@ -188,113 +189,115 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto py-6 md:py-10 px-4 md:px-6">
-      {/* User Panel */}
-      {session && <UserPanel user={session.user} />}
+    <>
+      <NavigationBar />
+      <div className="container mx-auto py-6 md:py-10 px-4 md:px-6 md:ml-16 mb-16 md:mb-0">
+        {/* User Panel */}
+        {session && <UserPanel user={session.user} />}
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <h1 className="text-3xl md:text-4xl font-bold">My Blog Posts</h1>
-        <Button variant="outline" className="mt-2 md:mt-0" onClick={() => router.push("/allpost")}>
-          View All Posts
-        </Button>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold">My Blog Posts</h1>
+          <Button variant="outline" className="mt-2 md:mt-0" onClick={() => router.push("/allpost")}>
+            View All Posts
+          </Button>
+        </div>
+
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {success && (
+          <Alert className="mb-4 bg-green-50 text-green-700 border-green-200">
+            <AlertDescription>{success}</AlertDescription>
+          </Alert>
+        )}
+
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>{editingPost ? "Edit Post" : "Create New Post"}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                placeholder="Post title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                disabled={loading || isUpdating}
+              />
+              <Textarea
+                placeholder="Write your post content..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+                className="min-h-[100px]"
+                disabled={loading || isUpdating}
+              />
+              <div className="flex flex-wrap gap-2">
+                <Button type="submit" disabled={loading || isUpdating} className="relative">
+                  {!editingPost && <PlusCircle className="mr-2 h-4 w-4" />}
+                  {(loading || isUpdating) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {loading ? "Creating..." : isUpdating ? "Updating..." : editingPost ? "Update Post" : "Create Post"}
+                </Button>
+                {editingPost && (
+                  <Button type="button" variant="outline" onClick={resetForm} disabled={loading || isUpdating}>
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <Loader2 className="w-6 h-6 animate-spin" />
+          </div>
+        ) : posts.length === 0 ? (
+          <p className="text-center text-gray-500">No posts available. Create the first one!</p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <Card key={post.id} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{new Date(post.created_at).toLocaleDateString()}</p>
+                </CardHeader>
+                <CardContent>
+                  <p className="whitespace-pre-wrap line-clamp-4">{post.content}</p>
+                </CardContent>
+                <CardFooter className="mt-auto pt-4 flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(post)} disabled={loading || isUpdating}>
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleDelete(post.id)}
+                    disabled={loading || isUpdating}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => handleShare(post)}
+                    disabled={loading || isUpdating}
+                  >
+                    <Share2 className="h-4 w-4 mr-1" />
+                    Share
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Share Post Dialog */}
+        {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
       </div>
-
-      {error && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      {success && (
-        <Alert className="mb-4 bg-green-50 text-green-700 border-green-200">
-          <AlertDescription>{success}</AlertDescription>
-        </Alert>
-      )}
-
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>{editingPost ? "Edit Post" : "Create New Post"}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              placeholder="Post title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              disabled={loading || isUpdating}
-            />
-            <Textarea
-              placeholder="Write your post content..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-              className="min-h-[100px]"
-              disabled={loading || isUpdating}
-            />
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" disabled={loading || isUpdating} className="relative">
-                {!editingPost && <PlusCircle className="mr-2 h-4 w-4" />}
-                {(loading || isUpdating) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? "Creating..." : isUpdating ? "Updating..." : editingPost ? "Update Post" : "Create Post"}
-              </Button>
-              {editingPost && (
-                <Button type="button" variant="outline" onClick={resetForm} disabled={loading || isUpdating}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-
-      {loading ? (
-        <div className="flex justify-center py-8">
-          <Loader2 className="w-6 h-6 animate-spin" />
-        </div>
-      ) : posts.length === 0 ? (
-        <p className="text-center text-gray-500">No posts available. Create the first one!</p>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Card key={post.id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                <p className="text-sm text-muted-foreground">{new Date(post.created_at).toLocaleDateString()}</p>
-              </CardHeader>
-              <CardContent>
-                <p className="whitespace-pre-wrap line-clamp-4">{post.content}</p>
-              </CardContent>
-              <CardFooter className="mt-auto pt-4 flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" onClick={() => handleEdit(post)} disabled={loading || isUpdating}>
-                  Edit
-                </Button>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => handleDelete(post.id)}
-                  disabled={loading || isUpdating}
-                >
-                  Delete
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => handleShare(post)}
-                  disabled={loading || isUpdating}
-                >
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Share
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
-
-      {/* Share Post Dialog */}
-      {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
-    </div>
+    </>
   )
 }
-
