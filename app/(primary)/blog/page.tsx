@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
-import { PlusCircle, Loader2, Share2 } from "lucide-react"
+import { PlusCircle, Loader2, Share2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -14,14 +13,15 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import UserPanel from "@/components/user-panel"
 import SharePostDialog from "@/components/share-post-dialog"
-// import NavigationBar from "@/components/sidebar"
+import NavigationSidebar from "@/components/sidebar"
 
 interface Post {
   id: string
-  timestamp: Date
+  timestamp?: Date
   title: string
   content: string
   created_at: string
+  updated_at?: string
 }
 
 export default function Home() {
@@ -190,8 +190,9 @@ export default function Home() {
   }
 
   return (
-    <>
-      <div className="container mx-auto py-6 md:py-10 px-4 md:px-6 md:ml-16 mb-16 md:mb-0">
+    <div className="flex min-h-screen">
+      <NavigationSidebar />
+      <div className="flex-1 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
         {session && <UserPanel user={session.user} />}
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
@@ -296,6 +297,6 @@ export default function Home() {
         {/* Share Post Dialog */}
         {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
       </div>
-    </>
+    </div>
   )
 }

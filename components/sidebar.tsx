@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, PenSquare, Users, Bookmark, Settings, LogOut } from "lucide-react"
+import { Home, PenSquare, Users, Bookmark, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { signOut } from "next-auth/react"
@@ -17,6 +17,7 @@ export default function NavigationBar() {
     { name: "about", icon: Users, href: "/about" },
     { name: "contactus", icon: Bookmark, href: "/contactus" },
     // { name: "Settings", icon: Settings, href: " /settings" },
+
   ]
 
   const isActive = (path: string) => pathname === path
