@@ -1,8 +1,8 @@
-// import prisma from "@/lib/db";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {

@@ -13,17 +13,16 @@ export default function NavigationBar() {
 
   const navItems = [
     { name: "Home", icon: Home, href: "/" },
-    { name: "My Posts", icon: PenSquare, href: "/posts" },
-    { name: "Community", icon: Users, href: "/community" },
-    { name: "Saved", icon: Bookmark, href: "/saved" },
-    { name: "Settings", icon: Settings, href: "/settings" },
+    { name: "My Posts", icon: PenSquare, href: "/allpost" },
+    { name: "about", icon: Users, href: "/about" },
+    { name: "contactus", icon: Bookmark, href: "/contactus" },
+    // { name: "Settings", icon: Settings, href: " /settings" },
   ]
 
   const isActive = (path: string) => pathname === path
 
   return (
     <>
-      {/* Desktop Sidebar */}
       <div className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 bg-background border-r flex-col items-center py-8 z-10">
         <div className="flex flex-col items-center gap-6 flex-1">
           <TooltipProvider delayDuration={300}>
