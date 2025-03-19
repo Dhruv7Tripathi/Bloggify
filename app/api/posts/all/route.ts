@@ -3,7 +3,7 @@ import db from "@/lib/db"
 import { authOptions } from "@/lib/authoptions"
 import { getServerSession } from "next-auth"
 
-export async function GET(req: Request, { params }: { params: Promise<{ userId: string }> }) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 
@@ -11,14 +11,15 @@ export async function GET(req: Request, { params }: { params: Promise<{ userId: 
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { userId } = await params;
-    if (userId !== session.user.id) {
-      return NextResponse.json({ message: "Unauthorized: You can only view your own posts" }, { status: 403 })
-    }
-
     const posts = await db.post.findMany({
-      where: {
-        userId,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -27,9 +28,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ userId: 
 
     return NextResponse.json(posts)
   } catch (error) {
-    console.error("Error fetching posts:", error)
+    console.error("Error fetching all posts:", error)
     return NextResponse.json({ message: "Failed to fetch posts" }, { status: 500 })
   }
 }
-
 
