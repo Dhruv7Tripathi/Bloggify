@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/db" // Assuming you have a prisma client setup
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const postId = params.id
+    const { id } = await params;
 
-    if (!postId) {
+    if (!id) {
       return NextResponse.json({ message: "Post ID is required" }, { status: 400 })
     }
 
     const post = await prisma.post.findUnique({
       where: {
-        id: postId,
+        id,
       },
       include: {
         user: {

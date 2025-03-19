@@ -33,7 +33,7 @@ import db from "@/lib/db"
 import { authOptions } from "@/lib/authoptions"
 import { getServerSession } from "next-auth"
 
-export async function GET(req: Request, { params }: { params: { userId: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ userId: string }> }) {
   try {
     const session = await getServerSession(authOptions)
 
@@ -41,7 +41,7 @@ export async function GET(req: Request, { params }: { params: { userId: string }
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { userId } = params
+    const { userId } = await params;
 
     // Verify that the requested user ID matches the authenticated user
     // or implement additional permission checks for admin users
