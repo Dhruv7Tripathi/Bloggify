@@ -51,15 +51,11 @@ export default function Home() {
       const userId = session?.user?.id
 
       if (!userId) {
-        console.error("User ID not available in session")
         setError("Please log in to view your posts")
         return
       }
-
-      console.log("Fetching posts for user:", userId)
       const response = await axios.get(`/api/posts/get/${encodeURIComponent(userId)}`)
       if (response.data) {
-        console.log("Fetched posts:", response.data)
         setPosts(response.data)
       } else {
         setPosts([])

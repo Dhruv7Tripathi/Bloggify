@@ -4,7 +4,9 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import { Loader2 } from "lucide-react"
+import { Loader2, Share2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import SharePostDialog from "@/components/share-post-dialog"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import NavigationSidebar from "@/components/sidebar"
@@ -23,7 +25,9 @@ interface Post {
 
 export default function AllPosts() {
   const [posts, setPosts] = useState<Post[]>([])
+  const [sharePost, setSharePost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isUpdating, setIsUpdating] = useState(false)
   const { status } = useSession()
   const router = useRouter()
 
@@ -56,6 +60,10 @@ export default function AllPosts() {
       .join("")
       .toUpperCase()
       .substring(0, 2)
+  }
+
+  const handleShare = (post: Post) => {
+    setSharePost(post)
   }
 
   if (status === "loading" || loading) {
@@ -98,16 +106,27 @@ export default function AllPosts() {
                 <CardContent>
                   <p className="whitespace-pre-wrap">{post.content}</p>
                 </CardContent>
-                <CardFooter className="text-sm text-muted-foreground">
-                  Posted on {new Date(post.created_at).toLocaleDateString()} at{" "}
-                  {new Date(post.created_at).toLocaleTimeString()}
+                <CardFooter className="flex justify-between items-center text-sm text-muted-foreground">
+                  <div>
+                    Posted on {new Date(post.created_at).toLocaleDateString()} at{" "}
+                    {new Date(post.created_at).toLocaleTimeString()}
+                  </div>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleShare(post)}
+                    disabled={loading || isUpdating}
+                  >
+                    <Share2 className="h-4 w-4 mr-1" />
+                    Share
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
         )}
+        {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
+
       </div>
     </div>
   )
 }
-

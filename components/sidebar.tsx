@@ -1,16 +1,28 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Home, Info, User, Users, Contact, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
+import UserPanel from "@/components/user-panel"
 
 export default function NavigationBar() {
   const pathname = usePathname()
+  const router = useRouter()
 
+  const { data: session, status } = useSession()
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/signin")
+    } else if (status === "authenticated") {
+      // fetchPosts()
+      router.push("/allpost")
+    }
+  }, [status, router])
   const navItems = [
     { name: "Home", icon: Home, href: "/" },
     { name: "Profile", icon: User, href: "/blog" },
@@ -24,7 +36,7 @@ export default function NavigationBar() {
 
   return (
     <>
-      <div className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 bg-background border-r flex-col items-center py-8 z-10">
+      <div className="hidden md:flex fixed left-0 top-4 bottom-0 w-16 bg-background border-r flex-col items-center py-8 z-10">
         <div className="flex flex-col items-center gap-6 flex-1">
           <TooltipProvider delayDuration={300}>
             {navItems.map((item) => (
@@ -59,6 +71,8 @@ export default function NavigationBar() {
                 <LogOut className="h-5 w-5" />
               </Button>
             </TooltipTrigger>
+            {session && <UserPanel user={session.user} />}
+
             <TooltipContent side="right">Log Out</TooltipContent>
           </Tooltip>
         </TooltipProvider>
