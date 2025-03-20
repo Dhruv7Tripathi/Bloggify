@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, PenSquare, Users, Bookmark, LogOut } from "lucide-react"
+import { Home, Info, User, Users, Contact, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { signOut } from "next-auth/react"
@@ -13,10 +13,10 @@ export default function NavigationBar() {
 
   const navItems = [
     { name: "Home", icon: Home, href: "/" },
-    { name: "My Posts", icon: PenSquare, href: "/allpost" },
-    { name: "about", icon: Users, href: "/about" },
-    { name: "contactus", icon: Bookmark, href: "/contactus" },
-    // { name: "Settings", icon: Settings, href: " /settings" },
+    { name: "Profile", icon: User, href: "/blog" },
+    { name: "Posts", icon: Users, href: " /allpost" },
+    { name: "about", icon: Info, href: "/about" },
+    { name: "contactus", icon: Contact, href: "/contactus" },
 
   ]
 

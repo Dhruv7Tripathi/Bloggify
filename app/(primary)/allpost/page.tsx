@@ -74,7 +74,7 @@ export default function AllPosts() {
     <div className="flex min-h-screen">
       <NavigationSidebar />
       <div className="flex-1 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6">All Blog Posts</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6">All Posts</h1>
 
         {posts.length === 0 ? (
           <p className="text-center text-gray-500">No posts available.</p>

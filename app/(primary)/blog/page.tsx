@@ -196,7 +196,7 @@ export default function Home() {
         {session && <UserPanel user={session.user} />}
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold">My Blog Posts</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">My Posts</h1>
           <Button variant="outline" className="mt-2 md:mt-0" onClick={() => router.push("/allpost")}>
             View All Posts
           </Button>
