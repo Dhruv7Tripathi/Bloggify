@@ -122,6 +122,12 @@ export default function Home() {
         if (!newPost) {
           throw new Error("Failed to create post: Backend did not return post data.")
         }
+
+        // Ensure new post has a valid date
+        if (!newPost.created_at) {
+          newPost.created_at = new Date().toISOString();
+        }
+
         setPosts((prev) => [newPost, ...prev])
         setSuccess("Post created successfully!")
       }
@@ -171,6 +177,19 @@ export default function Home() {
 
   const handleShare = (post: Post) => {
     setSharePost(post)
+  }
+
+  // Helper function to format date safely
+  const formatDate = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      return date instanceof Date && !isNaN(date.getTime())
+        ? date.toLocaleDateString()
+        : "Just now";
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Just now";
+    }
   }
 
   if (status === "loading") {
@@ -258,7 +277,7 @@ export default function Home() {
               <Card key={post.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{new Date(post.created_at).toLocaleDateString()}</p>
+                  <p className="text-sm text-muted-foreground">{formatDate(post.created_at)}</p>
                 </CardHeader>
                 <CardContent>
                   <p className="whitespace-pre-wrap line-clamp-4">{post.content}</p>

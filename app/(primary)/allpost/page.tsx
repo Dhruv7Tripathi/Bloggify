@@ -27,7 +27,7 @@ export default function AllPosts() {
   const [posts, setPosts] = useState<Post[]>([])
   const [sharePost, setSharePost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
-  const [isUpdating, setIsUpdating] = useState(false)
+  const [isUpdating] = useState(false)
   const { status } = useSession()
   const router = useRouter()
 
@@ -43,7 +43,16 @@ export default function AllPosts() {
     try {
       setLoading(true)
       const response = await axios.get("/api/posts/all")
-      setPosts(response.data)
+
+      // Ensure all posts have valid dates
+      const validatedPosts = response.data.map((post: Post) => {
+        if (!post.created_at) {
+          post.created_at = new Date().toISOString();
+        }
+        return post;
+      });
+
+      setPosts(validatedPosts)
     } catch (error) {
       console.error("Failed to fetch all posts:", error)
     } finally {
@@ -60,6 +69,32 @@ export default function AllPosts() {
       .join("")
       .toUpperCase()
       .substring(0, 2)
+  }
+
+  // Helper function to format date safely
+  const formatDate = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      return date instanceof Date && !isNaN(date.getTime())
+        ? date.toLocaleDateString()
+        : "Just now";
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Just now";
+    }
+  }
+
+  // Helper function to format time safely
+  const formatTime = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      return date instanceof Date && !isNaN(date.getTime())
+        ? date.toLocaleTimeString()
+        : "";
+    } catch (error) {
+      console.error("Error formatting time:", error);
+      return "";
+    }
   }
 
   const handleShare = (post: Post) => {
@@ -98,7 +133,7 @@ export default function AllPosts() {
                     </Avatar>
                     <div>
                       <p className="text-sm font-medium">{post.user.name}</p>
-                      <p className="text-xs text-muted-foreground">{new Date(post.created_at).toLocaleDateString()}</p>
+                      <p className="text-xs text-muted-foreground">{formatDate(post.created_at)}</p>
                     </div>
                   </div>
                   <CardTitle className="text-xl">{post.title}</CardTitle>
@@ -108,8 +143,8 @@ export default function AllPosts() {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center text-sm text-muted-foreground">
                   <div>
-                    Posted on {new Date(post.created_at).toLocaleDateString()} at{" "}
-                    {new Date(post.created_at).toLocaleTimeString()}
+                    Posted on {formatDate(post.created_at)}
+                    {formatTime(post.created_at) ? ` at ${formatTime(post.created_at)}` : ""}
                   </div>
                   <Button
                     variant="secondary"
