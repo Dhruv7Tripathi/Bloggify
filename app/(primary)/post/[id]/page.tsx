@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import axios, { type AxiosError } from "axios"
-import SharePostDialog from "@/components/share-post-dialog"
+import SharePostDialog from "@/components/(secondary)/share-post-dialog"
 
 interface Post {
   id: string

@@ -11,9 +11,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import UserPanel from "@/components/user-panel"
-import SharePostDialog from "@/components/share-post-dialog"
-import NavigationSidebar from "@/components/sidebar"
+import UserPanel from "@/components/(secondary)/user-panel"
+import SharePostDialog from "@/components/(secondary)/share-post-dialog"
+import NavigationSidebar from "@/components/(secondary)/sidebar"
 
 interface Post {
   id: string

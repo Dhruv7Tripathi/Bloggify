@@ -1,5 +1,5 @@
 import "../globals.css";
-import NavigationBar from "@/components/sidebar";
+import NavigationBar from "@/components/(secondary)/sidebar";
 export default function RootLayout({
   children,
 }: Readonly<{

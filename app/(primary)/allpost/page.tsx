@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation"
 import axios from "axios"
 import { Loader2, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import SharePostDialog from "@/components/share-post-dialog"
+import SharePostDialog from "@/components/(secondary)/share-post-dialog"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import NavigationSidebar from "@/components/sidebar"
+import NavigationSidebar from "@/components/(secondary)/sidebar"
 
 interface Post {
   id: string
