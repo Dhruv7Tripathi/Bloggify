@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import { Loader2, Share2 } from "lucide-react"
+import { Clock, Loader2, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import SharePostDialog from "@/components/(secondary)/share-post-dialog"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -44,7 +44,6 @@ export default function AllPosts() {
       setLoading(true)
       const response = await axios.get("/api/posts/all")
 
-      // Ensure all posts have valid dates
       const validatedPosts = response.data.map((post: Post) => {
         if (!post.created_at) {
           post.created_at = new Date().toISOString();
@@ -60,7 +59,6 @@ export default function AllPosts() {
     }
   }
 
-  // Get initials for avatar fallback
   const getInitials = (name: string) => {
     if (!name) return "U"
     return name
@@ -71,20 +69,15 @@ export default function AllPosts() {
       .substring(0, 2)
   }
 
-  // Helper function to format date safely
-  const formatDate = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      return date instanceof Date && !isNaN(date.getTime())
-        ? date.toLocaleDateString()
-        : "Just now";
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return "Just now";
-    }
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(date)
   }
 
-  // Helper function to format time safely
   const formatTime = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
@@ -142,9 +135,9 @@ export default function AllPosts() {
                   <p className="whitespace-pre-wrap">{post.content}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center text-sm text-muted-foreground">
-                  <div>
-                    Posted on {formatDate(post.created_at)}
-                    {formatTime(post.created_at) ? ` at ${formatTime(post.created_at)}` : ""}
+                  <div className="flex items-center text-xs text-muted-foreground mb-2">
+                    <Clock className="mr-1 h-3 w-3" />
+                    {formatDate(post.created_at)}
                   </div>
                   <Button
                     variant="secondary"
