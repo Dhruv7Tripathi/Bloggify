@@ -78,17 +78,17 @@ export default function AllPosts() {
     }).format(date)
   }
 
-  const formatTime = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      return date instanceof Date && !isNaN(date.getTime())
-        ? date.toLocaleTimeString()
-        : "";
-    } catch (error) {
-      console.error("Error formatting time:", error);
-      return "";
-    }
-  }
+  // const formatTime = (dateStr: string) => {
+  //   try {
+  //     const date = new Date(dateStr);
+  //     return date instanceof Date && !isNaN(date.getTime())
+  //       ? date.toLocaleTimeString()
+  //       : "";
+  //   } catch (error) {
+  //     console.error("Error formatting time:", error);
+  //     return "";
+  //   }
+  // }
 
   const handleShare = (post: Post) => {
     setSharePost(post)

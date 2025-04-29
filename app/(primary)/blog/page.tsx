@@ -123,7 +123,6 @@ export default function Home() {
           throw new Error("Failed to create post: Backend did not return post data.")
         }
 
-        // Ensure new post has a valid date
         if (!newPost.created_at) {
           newPost.created_at = new Date().toISOString();
         }
@@ -179,7 +178,6 @@ export default function Home() {
     setSharePost(post)
   }
 
-  // Helper function to format date safely
   const formatDate = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
