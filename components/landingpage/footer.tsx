@@ -41,7 +41,7 @@ const Footer = () => {
             <Link href='/about'><p className="hover:text-neutral-700 dark:hover:text-neutral-300">About</p></Link>
           </div>
           <div className="flex flex-col space-y-4 mt-4">
-            <Link href='https://twitter.com/dhruvtripathi' target="_blank">
+            <Link href='https://twitter.com/dhruvtripathi77' target="_blank">
               <p className="hover:text-neutral-700 dark:hover:text-neutral-300">Twitter</p>
             </Link>
             <Link href='https://www.linkedin.com/in/dhruv-tripathi' target="_blank">
