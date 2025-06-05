@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import UserAccountNav from '../(auth)/userAccountNav';
@@ -7,7 +7,7 @@ import SignInButton from '../(auth)/SIgnInButton';
 import { Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
-
+import Image from 'next/image';
 
 const menuItems = [
   { name: 'Home', href: '/' },
@@ -39,7 +39,15 @@ const Navbar = () => {
                 href="/"
                 aria-label="home"
                 className="flex items-center space-x-2">
-                <span className="text-xl font-bold text-foreground">Bloggify</span>
+                <Image
+                  src="/logo.jpg"
+                  alt="Bloggify Logo"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full object-cover lg:h-10 lg:w-10 md:h-10 md:w-10 sm:h-8 sm:w-8"
+                  priority
+                />
+                {/* <span className="text-xl font-bold text-foreground">Bloggify</span> */}
               </Link>
 
               <button

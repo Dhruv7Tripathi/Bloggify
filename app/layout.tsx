@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Blogify",
-  description: "created by Dhruv Tripathi",
+  title: "Bloggify",
+  description: "Blogiffy is a modern, fast, and responsive blog application ",
 };
 
 export default function RootLayout({

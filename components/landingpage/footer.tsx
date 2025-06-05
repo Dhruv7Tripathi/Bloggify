@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="mb-4 flex">
             <Link href="/" className="flex items-center space-x-2">
               <Image
-                src="/logo.png"
+                src="/logo.jpg"
                 width={30}
                 height={30}
                 alt="Logo"
