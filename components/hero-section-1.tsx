@@ -1,11 +1,20 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedGroup } from '@/components/ui/animated-group'
 import Navbar from './landingpage/navbar'
 import Footer from './landingpage/footer'
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { faqItems } from '@/contants/index'
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
 const transitionVariants = {
     item: {
         hidden: {
@@ -45,9 +54,9 @@ export function HeroSection() {
                             <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                                 <AnimatedGroup variants={transitionVariants}>
                                     <Link
-                                        href="#link"
+                                        href="/about"
                                         className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950">
-                                        <span className="text-foreground text-sm">Introducing Support for AI Models</span>
+                                        <span className="text-foreground text-sm">Introducing Bloggify</span>
                                         <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
                                         <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
@@ -101,7 +110,59 @@ export function HeroSection() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="flex flex-col overflow-hidden pb-[200px] pt-[400px]">
+                        <ContainerScroll
+                            titleComponent={
+                                <>
+                                    {/* <h1 className="text-4xl font-semibold text-black dark:text-white">
+                                        Bloggify <br />
+                                        {/* <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
+                                            Dashboard
+                                        </span> */}
+                                    {/* </h1> */}
+                                </>
+                            }
+                        >
+                            <Image
+                                src={`/blog.png`}
+                                alt="hero"
+                                height={720}
+                                width={1400}
+                                className="mx-auto rounded-xl object-cover h-full object-left-top"
+                                draggable={false}
+                            />
+                        </ContainerScroll>
+                    </div>
                 </section>
+                <section className="w-full py-16 sm:py-20 bg-black/30">
+                    <div className="container px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-12">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+                                Frequently Asked Questions
+                            </h2>
+                        </div>
+
+                        <Accordion
+                            type="single"
+                            collapsible
+                            className="max-w-3xl mx-auto divide-y  divide-gray-700"
+                        >
+                            {faqItems.map((item, index) => (
+                                <AccordionItem key={index} value={`item-${index}`}>
+                                    <AccordionTrigger className="text-left dark:hover:text-white  sm:text-lg font-medium py-4 text-white">
+                                        {item.question}
+                                    </AccordionTrigger>
+                                    <AccordionContent className="text-sm sm:text-base text-gray-200 pb-4">
+                                        {item.answer}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
+                </section>
+
+
                 <Footer />
             </main>
         </>
