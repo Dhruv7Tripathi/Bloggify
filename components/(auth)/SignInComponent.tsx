@@ -58,7 +58,7 @@ export default function Home() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <Button
                 type="button"
-                className="w-full flex items-center text-white justify-center gap-2 border border-gray-300 font-medium py-3 px-4 rounded-full transition duration-300"
+                className="w-full flex items-center text-black justify-center gap-2 border border-gray-300 font-medium py-3 px-4 rounded-full transition duration-300"
                 onClick={() => {
                   signIn("google", { callbackUrl: "/" });
                 }}

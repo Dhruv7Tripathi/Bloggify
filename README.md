@@ -1,4 +1,4 @@
-# Blogiffy
+# Bloggify
 
 Blogiffy is a modern, fast, and responsive blog application built using **Next.js**, **TypeScript**, and **Tailwind CSS**. It provides an elegant way to manage and showcase blog posts with a sleek UI and optimized performance.
 
@@ -31,8 +31,7 @@ Blogiffy is a modern, fast, and responsive blog application built using **Next.j
 
    ```bash
    npm install
-   # or
-   yarn install
+
    ```
 
 3. Set up environment variables:
@@ -47,8 +46,6 @@ Blogiffy is a modern, fast, and responsive blog application built using **Next.j
 
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
    The application will be available at `http://localhost:3000`.
@@ -65,11 +62,5 @@ To deploy Blogiffy on Vercel, follow these steps:
 ## Contributing
 
 Contributions are welcome! Feel free to open an issue or submit a pull request to improve Blogiffy.
-
-## License
-
-This project is licensed under the **MIT License**.
-
----
 
 Made with ❤️ by Dhruv Tripathi
