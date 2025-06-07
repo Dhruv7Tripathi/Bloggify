@@ -47,7 +47,6 @@ const Navbar = () => {
                   className="h-10 w-10 rounded-full object-cover lg:h-10 lg:w-10 md:h-10 md:w-10 sm:h-8 sm:w-8"
                   priority
                 />
-                {/* <span className="text-xl font-bold text-foreground">Bloggify</span> */}
               </Link>
 
               <button
@@ -65,7 +64,7 @@ const Navbar = () => {
                   <li key={index}>
                     <Link
                       href={item.href}
-                      className="text-muted-foreground hover:text-accent-foreground block duration-150">
+                      className="text-white hover:text-accent-foreground block duration-150">
                       <span>{item.name}</span>
                     </Link>
                   </li>
@@ -80,7 +79,7 @@ const Navbar = () => {
                     <li key={index}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150">
+                        className="text-white hover:text-accent-foreground block duration-150">
                         <span>{item.name}</span>
                       </Link>
                     </li>
