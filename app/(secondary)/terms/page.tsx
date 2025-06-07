@@ -1,15 +1,10 @@
 import Link from "next/link"
 import { ArrowLeft, FileText, Scale } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Navbar from "@/components/landingpage/navbar"
-import Footer from "@/components/landingpage/footer"
-
 export default function TermsOfService() {
   return (
     <>
-      <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-        {/* Background decoration */}
         <div aria-hidden className="absolute inset-0 pointer-events-none opacity-20">
           <div className="absolute top-20 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -54,7 +49,7 @@ export default function TermsOfService() {
                     1. Acceptance of Terms
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    By accessing and using Bloggify ("the Service"), you accept and agree to be bound by the terms and
+                    By accessing and using Bloggify, you accept and agree to be bound by the terms and
                     provision of this agreement. If you do not agree to abide by the above, please do not use this
                     service.
                   </p>
@@ -140,7 +135,7 @@ export default function TermsOfService() {
                 <section>
                   <h2 className="text-2xl font-semibold text-foreground mb-4">8. Disclaimer of Warranties</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    The Service is provided "as is" and "as available" without any warranties of any kind, either
+                    The Service is provided &quot;as is&quot; and &quot;as available&quot; without any warranties of any kind, either
                     express or implied. We do not warrant that the Service will be uninterrupted, secure, or error-free.
                   </p>
                 </section>
@@ -180,7 +175,7 @@ export default function TermsOfService() {
               <div className="bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-xl p-8 border border-border/50">
                 <h3 className="text-xl font-semibold mb-4">Ready to Start Blogging?</h3>
                 <p className="text-muted-foreground mb-6">
-                  Now that you've read our terms, join thousands of writers sharing their stories on Bloggify.
+                  Now that you&apos;ve read our terms, join thousands of writers sharing their stories on Bloggify.
                 </p>
                 <Button asChild size="lg" className="rounded-xl">
                   <Link href="/blog">Start Writing Today</Link>

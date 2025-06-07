@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Github, Twitter, Linkedin, Mail, Heart, ExternalLink } from "lucide-react"
+import { ArrowRight, Github, Twitter, Linkedin, Heart, ExternalLink } from "lucide-react"
 
 const Footer = () => {
   return (

@@ -200,7 +200,7 @@ export default function PrivacyPolicy() {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-semibold text-foreground mb-4">8. Children's Privacy</h2>
+                  <h2 className="text-2xl font-semibold text-foreground mb-4">8. Children&apos;s Privacy</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     Bloggify is not intended for children under 13 years of age. We do not knowingly collect personal
                     information from children under 13. If we become aware that we have collected personal information
@@ -221,7 +221,7 @@ export default function PrivacyPolicy() {
                   <h2 className="text-2xl font-semibold text-foreground mb-4">10. Changes to This Policy</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     We may update this privacy policy from time to time. We will notify you of any material changes by
-                    posting the new policy on this page and updating the "Last updated" date. We encourage you to review
+                    posting the new policy on this page and updating the &quot;Last updated&quot; date. We encourage you to review
                     this policy periodically.
                   </p>
                 </section>
@@ -249,7 +249,7 @@ export default function PrivacyPolicy() {
               <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-xl p-8 border border-border/50">
                 <h3 className="text-xl font-semibold mb-4">Your Privacy is Protected</h3>
                 <p className="text-muted-foreground mb-6">
-                  We're committed to keeping your data safe and giving you control over your privacy.
+                  We&apos;re committed to keeping your data safe and giving you control over your privacy.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="lg" className="rounded-xl">
