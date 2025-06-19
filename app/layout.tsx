@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/(provider)/theme-provider"
 import Provider from "@/components/(provider)/Provider";
 import { Analytics } from "@vercel/analytics/next"
+import SplashScreen from "@/components/splashscreen";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
         disableTransitionOnChange
       >
           <Provider>
+            <SplashScreen />
             {children}
           </Provider >
         </ThemeProvider>
