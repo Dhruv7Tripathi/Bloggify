@@ -178,17 +178,17 @@ export default function Home() {
     setSharePost(post)
   }
 
-  const formatDate = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      return date instanceof Date && !isNaN(date.getTime())
-        ? date.toLocaleDateString()
-        : "Just now";
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return "Just now";
-    }
-  }
+  // const formatDate = (dateStr: string) => {
+  //   try {
+  //     const date = new Date(dateStr);
+  //     return date instanceof Date && !isNaN(date.getTime())
+  //       ? date.toLocaleDateString()
+  //       : "Just now";
+  //   } catch (error) {
+  //     console.error("Error formatting date:", error);
+  //     return "Just now";
+  //   }
+  // }
 
   if (status === "loading") {
     return (
@@ -275,7 +275,7 @@ export default function Home() {
               <Card key={post.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{formatDate(post.created_at)}</p>
+                  {/* <p className="text-sm text-muted-foreground">{formatDate(post.created_at)}</p> */}
                 </CardHeader>
                 <CardContent>
                   <p className="whitespace-pre-wrap line-clamp-4">{post.content}</p>
@@ -307,7 +307,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Share Post Dialog */}
         {sharePost && <SharePostDialog post={sharePost} isOpen={!!sharePost} onClose={() => setSharePost(null)} />}
       </div>
     </div>

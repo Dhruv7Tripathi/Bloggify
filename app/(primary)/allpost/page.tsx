@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import { Clock, Loader2, Share2 } from "lucide-react"
+import { Loader2, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import SharePostDialog from "@/components/(secondary)/share-post-dialog"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -69,27 +69,6 @@ export default function AllPosts() {
       .substring(0, 2)
   }
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).format(date)
-  }
-
-  // const formatTime = (dateStr: string) => {
-  //   try {
-  //     const date = new Date(dateStr);
-  //     return date instanceof Date && !isNaN(date.getTime())
-  //       ? date.toLocaleTimeString()
-  //       : "";
-  //   } catch (error) {
-  //     console.error("Error formatting time:", error);
-  //     return "";
-  //   }
-  // }
-
   const handleShare = (post: Post) => {
     setSharePost(post)
   }
@@ -126,7 +105,7 @@ export default function AllPosts() {
                     </Avatar>
                     <div>
                       <p className="text-sm font-medium">{post.user.name}</p>
-                      <p className="text-xs text-muted-foreground">{formatDate(post.created_at)}</p>
+                      {/* <p className="text-xs text-muted-foreground">{formatDate(post.created_at)}</p> */}
                     </div>
                   </div>
                   <CardTitle className="text-xl">{post.title}</CardTitle>
@@ -135,10 +114,10 @@ export default function AllPosts() {
                   <p className="whitespace-pre-wrap">{post.content}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center text-sm text-muted-foreground">
-                  <div className="flex items-center text-xs text-muted-foreground mb-2">
+                  {/* <div className="flex items-center text-xs text-muted-foreground mb-2">
                     <Clock className="mr-1 h-3 w-3" />
                     {formatDate(post.created_at)}
-                  </div>
+                  </div> */}
                   <Button
                     variant="secondary"
                     onClick={() => handleShare(post)}
