@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import NavigationSidebar from "@/components/(secondary)/sidebar"
-import UserPanel from "@/components/(secondary)/user-panel"
+// import UserPanel from "@/components/(secondary)/user-panel"
 
 interface Post {
   id: string
