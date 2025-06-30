@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Loader2, Calendar } from "lucide-react"
+import { Loader2, Calendar, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import axios, { type AxiosError } from "axios"
@@ -24,6 +24,10 @@ interface Post {
     name?: string
     email?: string
     image?: string
+  }
+  _count?: {
+    // likes: number
+    comments: number
   }
 }
 
@@ -131,20 +135,19 @@ export default function AllPosts() {
                     <CardContent className="flex-1">
                       <p className="whitespace-pre-wrap line-clamp-4 text-muted-foreground">{post.content}</p>
                     </CardContent>
-                    {/* <CardFooter className="pt-4">
-                      <Button
-                        variant="default"
-                        size="sm"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleViewPost(post.id)
-                        }}
-                        className="w-full"
-                      >
-                        <Eye className="h-4 w-4 mr-2" />
-                        Read More
-                      </Button>
-                    </CardFooter> */}
+                    <CardFooter className="pt-4 space-y-3">
+                      <div className="flex items-center justify-between w-full">
+                        {/* <LikeDislike postId={post.id} /> */}
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <MessageCircle className="w-4 h-4" />
+                          <span>{post._count?.comments || 0}</span>
+                        </div>
+                      </div>
+                      {/* <Button variant="default" size="sm" onClick={() => handleViewPost(post.id)} className="w-full">
+                    <Eye className="h-4 w-4 mr-2" />
+                    Read More
+                  </Button> */}
+                    </CardFooter>
                   </Card>
                 </Link>
               ))}

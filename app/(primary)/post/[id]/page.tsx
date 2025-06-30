@@ -11,7 +11,7 @@ import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import NavigationSidebar from "@/components/(secondary)/sidebar"
 // import UserPanel from "@/components/(secondary)/user-panel"
-
+import Comments from "@/components/landingpage/Comments"
 interface Post {
   id: string
   title: string
@@ -23,6 +23,9 @@ interface Post {
     name?: string
     email?: string
     image?: string
+  }
+  _count: {
+    comments: number
   }
 }
 
@@ -194,6 +197,9 @@ export default function PostDetail() {
             <div className="whitespace-pre-wrap text-base leading-relaxed">{post.content}</div>
           </CardContent>
         </Card>
+        <div className="max-w-4xl mx-auto">
+          <Comments postId={post.id} />
+        </div>
       </div>
     </div>
   )
