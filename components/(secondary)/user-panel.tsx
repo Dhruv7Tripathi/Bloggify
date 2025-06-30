@@ -24,18 +24,18 @@ export default function UserPanel({ user }: UserPanelProps) {
     return user.email?.[0].toUpperCase() || "U"
   }
   return (
-    <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border-blue-100 dark:border-blue-900">
+    <Card className="mb-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-blue-100 dark:border-gray-800">
       <CardContent className="p-4 md:p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-blue-200 dark:border-blue-700">
+          <Avatar className="h-12 w-12 border-2 border-blue-200 dark:border-gray-500">
             <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-            <AvatarFallback className="bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200">
+            <AvatarFallback className="bg-blue-100 text-emerald-700 dark:bg-emerald-800 dark:text-blue-200">
               {getInitials()}
             </AvatarFallback>
           </Avatar>
 
           <div className="flex-1">
-            <h2 className="text-xl font-semibold">Welcome back, {displayName}!</h2>
+            <h2 className="text-xl font-semibold">Welcome, {displayName}!</h2>
             <p className="text-muted-foreground">{user.email}</p>
           </div>
         </div>

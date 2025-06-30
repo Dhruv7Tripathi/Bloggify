@@ -1,51 +1,54 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { Loader2, ArrowLeft, Calendar, Share2 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Loader2, ArrowLeft, Calendar, Edit, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Separator } from "@/components/ui/separator"
 import axios, { type AxiosError } from "axios"
-import SharePostDialog from "@/components/(secondary)/share-post-dialog"
+import { useSession } from "next-auth/react"
+import NavigationSidebar from "@/components/(secondary)/sidebar"
+import UserPanel from "@/components/(secondary)/user-panel"
 
 interface Post {
   id: string
   title: string
   content: string
   created_at: string
-  userId: string
-  user?: {
+  updated_at?: string
+  user: {
+    id: string
     name?: string
     email?: string
     image?: string
   }
 }
 
-export default function PostPage() {
-  const params = useParams()
-  const router = useRouter()
+export default function PostDetail() {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [shareDialogOpen, setShareDialogOpen] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const params = useParams()
+  const postId = params.id as string
 
   useEffect(() => {
-    if (params.id) {
-      fetchPost(params.id as string)
+    if (status === "unauthenticated") {
+      router.push("/signin")
+    } else if (status === "authenticated" && postId) {
+      fetchPost()
     }
-  }, [params.id])
+  }, [status, router, postId])
 
-  const fetchPost = async (postId: string) => {
+  const fetchPost = async () => {
     try {
       setLoading(true)
       const response = await axios.get(`/api/posts/${postId}`)
-      if (response.data) {
-        setPost(response.data)
-      } else {
-        setError("Post not found")
-      }
+      setPost(response.data)
     } catch (error: unknown) {
       const axiosError = error as AxiosError<{ message: string }>
       console.error("Failed to fetch post:", axiosError.response?.data || axiosError.message)
@@ -55,20 +58,39 @@ export default function PostPage() {
     }
   }
 
-  // Get user initials for avatar fallback
-  const getInitials = (name?: string, email?: string) => {
-    if (name) {
-      return name
-        .split(" ")
-        .map((part) => part[0])
-        .join("")
-        .toUpperCase()
-        .substring(0, 2)
+  const handleDelete = async () => {
+    if (!post || !confirm("Are you sure you want to delete this post?")) return
+
+    try {
+      setDeleting(true)
+      await axios.delete(`/api/posts/delete/${post.id}`)
+      router.push("/")
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message: string }>
+      console.error("Failed to delete post:", axiosError.response?.data || axiosError.message)
+      setError(axiosError.response?.data?.message || "Failed to delete post. Please try again later.")
+    } finally {
+      setDeleting(false)
     }
-    return email?.[0].toUpperCase() || "U"
   }
 
-  if (loading) {
+  const handleEdit = () => {
+    router.push(`/?edit=${post?.id}`)
+  }
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  }
+
+  const isOwner = session?.user?.id === post?.user.id
+
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="w-6 h-6 animate-spin" />
@@ -76,60 +98,103 @@ export default function PostPage() {
     )
   }
 
-  if (error || !post) {
+  if (status === "unauthenticated") {
+    return null
+  }
+
+  if (error) {
     return (
-      <div className="container mx-auto py-10 px-4">
-        <Button variant="ghost" onClick={() => router.back()} className="mb-4">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Go Back
-        </Button>
-        <Alert variant="destructive">
-          <AlertDescription>{error || "Post not found"}</AlertDescription>
-        </Alert>
+      <div className="flex min-h-screen">
+        <NavigationSidebar />
+        <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6">
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+          <Button variant="outline" onClick={() => router.back()} className="mt-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Go Back
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  if (!post) {
+    return (
+      <div className="flex min-h-screen">
+        <NavigationSidebar />
+        <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6">
+          <p className="text-center text-gray-500">Post not found.</p>
+          <Button variant="outline" onClick={() => router.back()} className="mt-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Go Back
+          </Button>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto py-6 md:py-10 px-4 md:px-6">
-      <Button variant="ghost" onClick={() => router.back()} className="mb-4">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Go Back
-      </Button>
+    <div className="flex min-h-screen">
+      <NavigationSidebar />
+      <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
+        {/* {session && <UserPanel user={session.user} />} */}
 
-      <Card className="max-w-3xl mx-auto">
-        <CardHeader>
-          <div className="flex items-center gap-3 mb-4">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={post.user?.image || ""} alt={post.user?.name || "User"} />
-              <AvatarFallback>{getInitials(post.user?.name, post.user?.email)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="font-medium">{post.user?.name || post.user?.email || "Anonymous"}</p>
-              <div className="flex items-center text-xs text-muted-foreground">
-                <Calendar className="h-3 w-3 mr-1" />
-                {new Date(post.created_at).toLocaleDateString()}
-              </div>
-            </div>
-          </div>
-          <CardTitle className="text-2xl md:text-3xl">{post.title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="whitespace-pre-wrap">{post.content}</p>
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end pt-4">
-          <Button variant="secondary" onClick={() => setShareDialogOpen(true)}>
-            <Share2 className="h-4 w-4 mr-2" />
-            Share Post
+        <div className="mb-6">
+          <Button variant="outline" onClick={() => router.back()}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
           </Button>
-        </CardFooter>
-      </Card>
+        </div>
 
-      {/* Share Post Dialog */}
-      {post && <SharePostDialog post={post} isOpen={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />}
+        <Card className="max-w-4xl mx-auto">
+          <CardHeader className="space-y-4">
+            <div className="flex justify-between items-start">
+              <CardTitle className="text-2xl md:text-3xl font-bold leading-tight">{post.title}</CardTitle>
+              {isOwner && (
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={handleEdit}>
+                    <Edit className="w-4 h-4 mr-1" />
+                    Edit
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
+                    {deleting ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Trash2 className="w-4 h-4 mr-1" />}
+                    Delete
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={post.user.image || ""} alt={post.user.name || ""} />
+                  <AvatarFallback>{post.user.name?.charAt(0) || post.user.email?.charAt(0) || "U"}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{post.user.name || post.user.email}</span>
+              </div>
+
+              <Separator orientation="vertical" className="h-4" />
+
+              <div className="flex items-center gap-1">
+                <Calendar className="w-4 h-4" />
+                <span>Published {formatDate(post.created_at)}</span>
+              </div>
+
+              {post.updated_at && post.updated_at !== post.created_at && (
+                <>
+                  <Separator orientation="vertical" className="h-4" />
+                  <span>Updated {formatDate(post.updated_at)}</span>
+                </>
+              )}
+            </div>
+          </CardHeader>
+
+          <CardContent className="prose prose-gray max-w-none">
+            <div className="whitespace-pre-wrap text-base leading-relaxed">{post.content}</div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
-

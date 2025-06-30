@@ -178,18 +178,6 @@ export default function Home() {
     setSharePost(post)
   }
 
-  // const formatDate = (dateStr: string) => {
-  //   try {
-  //     const date = new Date(dateStr);
-  //     return date instanceof Date && !isNaN(date.getTime())
-  //       ? date.toLocaleDateString()
-  //       : "Just now";
-  //   } catch (error) {
-  //     console.error("Error formatting date:", error);
-  //     return "Just now";
-  //   }
-  // }
-
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -205,7 +193,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen">
       <NavigationSidebar />
-      <div className="flex-1 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
+      <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
         {session && <UserPanel user={session.user} />}
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
