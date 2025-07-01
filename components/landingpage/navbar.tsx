@@ -11,8 +11,8 @@ import Image from 'next/image';
 
 const menuItems = [
   { name: 'Home', href: '/' },
-  { name: 'Post', href: '/blog' },
-  { name: 'ContactUs', href: '/contactus' },
+  { name: 'Posts', href: '/allpost' },
+  { name: 'write', href: '/write' },
 ]
 
 const Navbar = () => {

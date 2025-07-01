@@ -103,7 +103,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
 
       setIsDraft(false);
       onSave?.();
-      router.push("/");
+      router.push("/blog");
     } catch (error) {
       console.error("Failed to publish:", error);
       alert("Failed to publish post. Please try again.");
