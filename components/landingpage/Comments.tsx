@@ -61,6 +61,7 @@ export default function Comments({ postId }: CommentsProps) {
       setError("")
       const response = await axios.post(`/api/posts/${postId}/comments`, {
         content: newComment.trim(),
+        title: "Comment",
       })
 
       setComments([response.data.data, ...comments])

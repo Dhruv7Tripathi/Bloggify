@@ -127,10 +127,10 @@ export default function AllPosts() {
                         <span>{post.user.name || post.user.email}</span>
                       </div>
                       <CardTitle className="text-lg font-semibold text-white mb-1">{post.title}</CardTitle>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      {/* <div className="flex items-center gap-1 text-sm text-muted-foreground">
                         <Calendar className="w-4 h-4" />
                         <span>{formatDate(post.created_at)}</span>
-                      </div>
+                      </div> */}
                     </CardHeader>
                     <CardContent className="flex-1">
                       <p className="whitespace-pre-wrap line-clamp-4 text-muted-foreground">{post.content}</p>

@@ -9,7 +9,7 @@ export default function RootLayout({
     <div>
       <div>
         {/* <NavBar /> */}
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <main className="">{children}</main>
         {/* <Footer /> */}
       </div>

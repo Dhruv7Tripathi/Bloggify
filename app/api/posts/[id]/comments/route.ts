@@ -55,7 +55,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ message: "Comment content is required" }, { status: 400 })
     }
 
-    // Check if post exists
     const post = await prisma.post.findUnique({
       where: { id: postId },
     })

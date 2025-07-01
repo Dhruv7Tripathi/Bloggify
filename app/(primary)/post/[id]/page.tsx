@@ -141,62 +141,62 @@ export default function PostDetail() {
     <div className="flex min-h-screen">
       <NavigationSidebar />
       <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
-        {/* {session && <UserPanel user={session.user} />} */}
-
-        <div className="mb-6">
+        {/* <div className="mb-6 ml-24 pl-24">
           <Button variant="outline" onClick={() => router.back()}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-        </div>
+        </div> */}
 
         <Card className="max-w-4xl mx-auto">
           <CardHeader className="space-y-4">
-            <div className="flex justify-between items-start">
-              <CardTitle className="text-2xl md:text-3xl font-bold leading-tight">{post.title}</CardTitle>
-              {isOwner && (
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={handleEdit}>
-                    <Edit className="w-4 h-4 mr-1" />
-                    Edit
-                  </Button>
-                  <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
-                    {deleting ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Trash2 className="w-4 h-4 mr-1" />}
-                    Delete
-                  </Button>
-                </div>
-              )}
+            <div className="flex items-center gap-2">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src={post.user.image || ""} alt={post.user.name || ""} />
+                <AvatarFallback>
+                  {post.user.name?.charAt(0) || post.user.email?.charAt(0) || "U"}
+                </AvatarFallback>
+              </Avatar>
+              <span className="font-medium">{post.user.name || post.user.email}</span>
             </div>
 
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Avatar className="w-8 h-8">
-                  <AvatarImage src={post.user.image || ""} alt={post.user.name || ""} />
-                  <AvatarFallback>{post.user.name?.charAt(0) || post.user.email?.charAt(0) || "U"}</AvatarFallback>
-                </Avatar>
-                <span className="font-medium">{post.user.name || post.user.email}</span>
+            <CardTitle className="text-2xl md:text-3xl font-bold leading-tight">
+              {post.title}
+            </CardTitle>
+
+            {isOwner && (
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={handleEdit}>
+                  <Edit className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
+                <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
+                  {deleting ? (
+                    <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                  ) : (
+                    <Trash2 className="w-4 h-4 mr-1" />
+                  )}
+                  Delete
+                </Button>
               </div>
+            )}
 
-              <Separator orientation="vertical" className="h-4" />
-
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                <span>Published {formatDate(post.created_at)}</span>
+            {/* Metadata (e.g. updated time) */}
+            {post.updated_at && post.updated_at !== post.created_at && (
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <Separator orientation="vertical" className="h-4" />
+                <span>Updated {formatDate(post.updated_at)}</span>
               </div>
-
-              {post.updated_at && post.updated_at !== post.created_at && (
-                <>
-                  <Separator orientation="vertical" className="h-4" />
-                  <span>Updated {formatDate(post.updated_at)}</span>
-                </>
-              )}
-            </div>
+            )}
           </CardHeader>
 
           <CardContent className="prose prose-gray max-w-none">
-            <div className="whitespace-pre-wrap text-base leading-relaxed">{post.content}</div>
+            <div className="whitespace-pre-wrap text-base leading-relaxed">
+              {post.content}
+            </div>
           </CardContent>
         </Card>
+
         <div className="max-w-4xl mx-auto">
           <Comments postId={post.id} />
         </div>
