@@ -88,16 +88,6 @@ export default function Comments({ postId }: CommentsProps) {
     }
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  }
-
   return (
     <Card className="mt-8">
       <CardHeader>
@@ -115,17 +105,27 @@ export default function Comments({ postId }: CommentsProps) {
 
         {session && (
           <form onSubmit={handleSubmitComment} className="space-y-4">
-            <Textarea
-              placeholder="Write a comment..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              className="min-h-[80px]"
-              disabled={submitting}
-            />
-            <Button type="submit" disabled={submitting || !newComment.trim()}>
-              {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
-              {submitting ? "Posting..." : "Post Comment"}
-            </Button>
+            <div className="relative">
+              <Textarea
+                placeholder="Write a comment..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                className="min-h-[80px] pr-12" // add padding right so text doesn't overlap button
+                disabled={submitting}
+              />
+              <button
+                type="submit"
+                disabled={submitting || !newComment.trim()}
+                className="absolute bottom-2 right-2 text-sm flex items-center justify-center p-2 rounded-md bg-primary text-white disabled:opacity-50"
+              >
+                {submitting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+
           </form>
         )}
 
@@ -151,7 +151,6 @@ export default function Comments({ postId }: CommentsProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-sm">{comment.user.name || comment.user.email}</span>
-                      <span className="text-xs text-muted-foreground">{formatDate(comment.created_at)}</span>
                     </div>
                     {session?.user?.id === comment.user.id && (
                       <Button

@@ -73,9 +73,9 @@ export default function AllPosts() {
 
   return (
     <div className="flex min-h-screen">
-      <NavigationSidebar />
-      <div className="flex-1" style={{ marginLeft: "200px", marginRight: "400px" }}>
-        <div className="container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
+      {/* <NavigationSidebar /> */}
+      <div className="flex-1" style={{ marginLeft: "300px", marginRight: "300px" }}>
+        <div className="container mt-24 mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <h1 className="text-3xl md:text-4xl font-bold">All Posts</h1>
