@@ -2,16 +2,13 @@
 
 import type React from "react"
 import { useEffect, useState } from "react"
-import { PlusCircle, Loader2, Share2 } from 'lucide-react'
+import { Loader2, Share2, Pen } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import UserPanel from "@/components/(secondary)/user-panel"
 import SharePostDialog from "@/components/(secondary)/share-post-dialog"
 import NavigationSidebar from "@/components/(secondary)/sidebar"
 
@@ -26,11 +23,11 @@ interface Post {
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [editingPost, setEditingPost] = useState<Post | null>(null)
+  const [, setTitle] = useState("")
+  const [, setContent] = useState("")
+  const [, setEditingPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
+  const [isUpdating,] = useState(false)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [sharePost, setSharePost] = useState<Post | null>(null)
@@ -75,74 +72,6 @@ export default function Home() {
       setLoading(false)
     }
   }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
-
-    if (status !== "authenticated") {
-      setError("You must be logged in to create a post.")
-      return
-    }
-
-    if (!title.trim() || !content.trim()) {
-      setError("Title and content cannot be empty.")
-      return
-    }
-
-    try {
-      if (editingPost) {
-        setIsUpdating(true)
-        const response = await axios.put(`/api/posts/update/${editingPost.id}`, {
-          title,
-          content,
-          userId: session.user.id,
-        })
-        if (!response.data?.data) {
-          throw new Error("Failed to update post: Backend did not return updated post data.")
-        }
-        setPosts((prev) =>
-          prev.map((post) =>
-            post.id === editingPost.id ? { ...post, title, content, updated_at: new Date().toISOString() } : post,
-          ),
-        )
-
-        setSuccess("Post updated successfully!")
-        setEditingPost(null)
-      } else {
-        setLoading(true)
-        const response = await axios.post("/api/posts", {
-          userId: session.user.id,
-          title,
-          content,
-        })
-
-        const newPost = response.data?.data
-        if (!newPost) {
-          throw new Error("Failed to create post: Backend did not return post data.")
-        }
-
-        if (!newPost.created_at) {
-          newPost.created_at = new Date().toISOString();
-        }
-
-        setPosts((prev) => [newPost, ...prev])
-        setSuccess("Post created successfully!")
-      }
-
-      setTitle("")
-      setContent("")
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<{ message: string }>
-      console.error("Failed to submit post:", axiosError.response?.data || axiosError.message)
-      setError(axiosError.response?.data?.message || "Failed to submit post.")
-    } finally {
-      setLoading(false)
-      setIsUpdating(false)
-    }
-  }
-
   const handleDelete = async (id: string) => {
     try {
       setLoading(true)
@@ -158,22 +87,15 @@ export default function Home() {
     }
   }
 
+
   const handleEdit = (post: Post) => {
+    router.push(`/write?edit=${post.id}`)
     setEditingPost(post)
     setTitle(post.title)
     setContent(post.content)
     setError("")
     setSuccess("")
   }
-
-  const resetForm = () => {
-    setEditingPost(null)
-    setTitle("")
-    setContent("")
-    setError("")
-    setSuccess("")
-  }
-
   const handleShare = (post: Post) => {
     setSharePost(post)
   }
@@ -194,14 +116,19 @@ export default function Home() {
     <div className="flex min-h-screen">
       <NavigationSidebar />
       <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
-        {session && <UserPanel user={session.user} />}
-
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <h1 className="text-3xl md:text-4xl font-bold">My Posts</h1>
-          <Button variant="outline" className="mt-2 md:mt-0" onClick={() => router.push("/allpost")}>
-            View All Posts
-          </Button>
+          <div className="flex gap-2 mt-2 md:mt-0">
+            <Button variant="default" onClick={() => router.push("/write")}>
+              <Pen className="w-4 h-4 mr-2" />
+              Write
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/allpost")}>
+              View All Posts
+            </Button>
+          </div>
         </div>
+
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertDescription>{error}</AlertDescription>
@@ -213,44 +140,6 @@ export default function Home() {
             <AlertDescription>{success}</AlertDescription>
           </Alert>
         )}
-
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>{editingPost ? "Edit Post" : "Create New Post"}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                placeholder="Post title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                disabled={loading || isUpdating}
-              />
-              <Textarea
-                placeholder="Write your post content..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
-                className="min-h-[100px]"
-                disabled={loading || isUpdating}
-              />
-              <div className="flex flex-wrap gap-2">
-                <Button type="submit" disabled={loading || isUpdating} className="relative">
-                  {!editingPost && <PlusCircle className="mr-2 h-4 w-4" />}
-                  {(loading || isUpdating) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {loading ? "Creating..." : isUpdating ? "Updating..." : editingPost ? "Update Post" : "Create Post"}
-                </Button>
-                {editingPost && (
-                  <Button type="button" variant="outline" onClick={resetForm} disabled={loading || isUpdating}>
-                    Cancel
-                  </Button>
-                )}
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-
         {loading ? (
           <div className="flex justify-center py-8">
             <Loader2 className="w-6 h-6 animate-spin" />

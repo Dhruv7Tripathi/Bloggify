@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useSession } from "next-auth/react"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 interface Comment {
   id: string
@@ -66,9 +66,10 @@ export default function Comments({ postId }: CommentsProps) {
 
       setComments([response.data.data, ...comments])
       setNewComment("")
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message: string }>
       console.error("Failed to create comment:", error)
-      setError(error.response?.data?.message || "Failed to create comment")
+      setError(axiosError.response?.data?.message || "Failed to create comment")
     } finally {
       setSubmitting(false)
     }
@@ -80,9 +81,10 @@ export default function Comments({ postId }: CommentsProps) {
     try {
       await axios.delete(`/api/comments/${commentId}`)
       setComments(comments.filter((comment) => comment.id !== commentId))
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to delete comment:", error)
-      setError(error.response?.data?.message || "Failed to delete comment")
+      const axiosError = error as AxiosError<{ message: string }>
+      setError(axiosError.response?.data?.message || "Failed to delete comment")
     }
   }
 

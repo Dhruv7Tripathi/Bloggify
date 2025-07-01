@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Loader2, Calendar, MessageCircle } from "lucide-react"
+import { Loader2, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -59,21 +59,6 @@ export default function AllPosts() {
       setLoading(false)
     }
   }
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  }
-
-  // const handleViewPost = (postId: string) => {
-  //   router.push(`/post/${postId}`)
-  // }
-
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -127,10 +112,6 @@ export default function AllPosts() {
                         <span>{post.user.name || post.user.email}</span>
                       </div>
                       <CardTitle className="text-lg font-semibold text-white mb-1">{post.title}</CardTitle>
-                      {/* <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4" />
-                        <span>{formatDate(post.created_at)}</span>
-                      </div> */}
                     </CardHeader>
                     <CardContent className="flex-1">
                       <p className="whitespace-pre-wrap line-clamp-4 text-muted-foreground">{post.content}</p>
@@ -143,10 +124,6 @@ export default function AllPosts() {
                           <span>{post._count?.comments || 0}</span>
                         </div>
                       </div>
-                      {/* <Button variant="default" size="sm" onClick={() => handleViewPost(post.id)} className="w-full">
-                    <Eye className="h-4 w-4 mr-2" />
-                    Read More
-                  </Button> */}
                     </CardFooter>
                   </Card>
                 </Link>

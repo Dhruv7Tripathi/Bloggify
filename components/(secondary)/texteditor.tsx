@@ -21,7 +21,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
   const [content, setContent] = useState(initialContent)
   const [isPublishing, setIsPublishing] = useState(false)
   const [showToolbar, setShowToolbar] = useState(false)
-  const [selectedText, setSelectedText] = useState("")
+  const [, setSelectedText] = useState("")
   const [toolbarPosition, setToolbarPosition] = useState({ x: 0, y: 0 })
   const [isDraft, setIsDraft] = useState(true)
   const [postIdState, setPostIdState] = useState(postId)
@@ -66,7 +66,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
         if (response.data?.data?.id) {
           const newId = response.data.data.id
           setPostIdState(newId)
-          router.replace(`?edit=${newId}`)
+          // router.replace(`?edit=${newId}`)
         }
       }
     } catch (error) {
@@ -75,38 +75,42 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
   }
 
   const handlePublish = async () => {
-    if (!session?.user?.id) return
+    if (!session?.user?.id) return;
     if (!title.trim() || !content.trim()) {
-      alert("Please add both title and content before publishing")
-      return
+      alert("Please add both title and content before publishing");
+      return;
     }
 
     try {
-      setIsPublishing(true)
+      setIsPublishing(true);
 
       const payload = {
         title: title.trim(),
         content: content.trim(),
         userId: session.user.id,
         isDraft: false,
-      }
+      };
 
-      if (postId) {
-        await axios.put(`/api/posts/update/${postId}`, payload)
+      if (postIdState) {
+        await axios.put(`/api/posts/update/${postIdState}`, payload);
       } else {
-        await axios.post("/api/posts", payload)
+        const response = await axios.post("/api/posts", payload);
+        if (response.data?.data?.id) {
+          setPostIdState(response.data.data.id);
+        }
+        router.push('/blog');
       }
 
-      setIsDraft(false)
-      onSave?.()
-      router.push("/")
+      setIsDraft(false);
+      onSave?.();
+      router.push("/");
     } catch (error) {
-      console.error("Failed to publish:", error)
-      alert("Failed to publish post. Please try again.")
+      console.error("Failed to publish:", error);
+      alert("Failed to publish post. Please try again.");
     } finally {
-      setIsPublishing(false)
+      setIsPublishing(false);
     }
-  }
+  };
 
   const handleTextSelection = () => {
     const selection = window.getSelection()
@@ -175,9 +179,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
         </div>
       </div>
 
-      {/* Editor */}
       <div className="max-w-4xl mx-auto px-6 py-12">
-        {/* Title */}
         <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -186,7 +188,6 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
           style={{ fontSize: "2.5rem", lineHeight: "1.2" }}
         />
 
-        {/* Content Editor */}
         <div className="relative">
           <div className="flex items-center gap-2 mb-4 text-gray-400">
             <Plus className="w-6 h-6" />

@@ -16,7 +16,7 @@ interface Post {
 export default function WritePage() {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(false)
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams()
   const editId = searchParams.get("edit")

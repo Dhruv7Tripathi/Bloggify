@@ -1,13 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authoptions"
 
-const prisma = new PrismaClient()
+interface Params {
+  params: Promise<{ id: string }>;
+}
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET({ params }: Params) {
   try {
-    const { id: postId } = params
+    const { id: postId } = await params
 
     const comments = await prisma.comment.findMany({
       where: { postId },
@@ -35,7 +37,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: Params) {
   try {
     const session = await getServerSession(authOptions)
 
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { id: postId } = params
+    const { id: postId } = await params
     const body = await request.json()
     const { content, title } = body
 
