@@ -110,22 +110,14 @@ export default function Comments({ postId }: CommentsProps) {
                 placeholder="Write a comment..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="min-h-[80px] pr-12" // add padding right so text doesn't overlap button
+                className="min-h-[80px]"
                 disabled={submitting}
               />
-              <button
-                type="submit"
-                disabled={submitting || !newComment.trim()}
-                className="absolute bottom-2 right-2 text-sm flex items-center justify-center p-2 rounded-md bg-primary text-white disabled:opacity-50"
-              >
-                {submitting ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Send className="w-4 h-4" />
-                )}
-              </button>
+              <Button type="submit" disabled={submitting || !newComment.trim()}>
+                {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
+                {submitting ? "Posting..." : "Post Comment"}
+              </Button>
             </div>
-
           </form>
         )}
 

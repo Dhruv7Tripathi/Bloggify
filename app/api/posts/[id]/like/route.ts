@@ -94,8 +94,6 @@ export async function POST(request: NextRequest, { params }: Params) {
   } catch (error) {
     console.error("Error handling like:", error)
     return NextResponse.json({ message: "Failed to process like" }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -134,7 +132,5 @@ export async function GET(request: NextRequest, { params }: Params) {
   } catch (error) {
     console.error("Error fetching likes:", error)
     return NextResponse.json({ message: "Failed to fetch likes" }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }

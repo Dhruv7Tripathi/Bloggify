@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Loader2, MessageCircle } from "lucide-react"
+import { Loader2, MessageCircle, ThumbsUp, ThumbsDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -10,7 +10,8 @@ import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import NavigationSidebar from "@/components/(secondary)/sidebar"
+// import NavigationSidebar from "@/components/(secondary)/sidebar"
+import LikeDislike from "@/components/(secondary)/likedislike"
 // import UserPanel from "@/components/(secondary)/user-panel"
 
 interface Post {
@@ -26,7 +27,7 @@ interface Post {
     image?: string
   }
   _count?: {
-    // likes: number
+    likes: number
     comments: number
   }
 }
@@ -118,7 +119,7 @@ export default function AllPosts() {
                     </CardContent>
                     <CardFooter className="pt-4 space-y-3">
                       <div className="flex items-center justify-between w-full">
-                        {/* <LikeDislike postId={post.id} /> */}
+                        <LikeDislike postId={post.id} />
                         <div className="flex items-center gap-1 text-sm text-muted-foreground">
                           <MessageCircle className="w-4 h-4" />
                           <span>{post._count?.comments || 0}</span>

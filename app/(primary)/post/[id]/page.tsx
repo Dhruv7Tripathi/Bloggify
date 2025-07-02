@@ -230,6 +230,7 @@ import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 // import NavigationSidebar from "@/components/(secondary)/navigation-sidebar"
 import Comments from "@/components/landingpage/Comments"
+import LikeDislike from "@/components/(secondary)/likedislike"
 
 interface Post {
   id: string
@@ -244,6 +245,7 @@ interface Post {
     image?: string
   }
   _count: {
+    likes: number
     comments: number
   }
 }
@@ -374,7 +376,7 @@ export default function PostDetail() {
     return (
       <div className="min-h-screen bg-background">
         {/* <NavigationSidebar /> */}
-        <div className="lg:ml-16 pb-20 lg:pb-6">
+        <div className="lg:ml-16 mt-24 pb-20 lg:pb-6">
           <div className="container mx-auto px-4 py-6 max-w-4xl">
             <Card>
               <CardContent className="pt-6 text-center">
@@ -399,7 +401,7 @@ export default function PostDetail() {
       {/* <NavigationSidebar /> */}
 
       {/* Mobile Header */}
-      <div className="lg:hidden sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <div className="lg:hidden  sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="icon" onClick={() => router.back()}>
@@ -489,7 +491,6 @@ export default function PostDetail() {
                     </div>
                   </div>
 
-                  {/* Desktop Actions */}
                   {isOwner && (
                     <div className="hidden lg:flex items-center gap-2">
                       <Button variant="outline" size="sm" onClick={handleEdit}>
@@ -529,12 +530,10 @@ export default function PostDetail() {
                   )}
                 </div>
 
-                {/* Post Title */}
                 <div>
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">{post.title}</h1>
                 </div>
 
-                {/* Post Metadata */}
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                   {post.updated_at && post.updated_at !== post.created_at && (
                     <div className="flex items-center gap-1">
@@ -550,12 +549,13 @@ export default function PostDetail() {
                       {(post?._count?.comments ?? 0) === 1 ? "comment" : "comments"}
                     </span>
                   </div>
-
+                  <div className="flex items-center justify-between pt-4">
+                    <LikeDislike postId={post.id} />
+                  </div>
                 </div>
               </CardHeader>
             </Card>
 
-            {/* Post Content */}
             <Card>
               <CardContent className="pt-6">
                 <div className="prose prose-sm sm:prose lg:prose-lg max-w-none">
@@ -564,7 +564,6 @@ export default function PostDetail() {
               </CardContent>
             </Card>
 
-            {/* Comments Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
