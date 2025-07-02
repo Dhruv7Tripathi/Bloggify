@@ -9,7 +9,7 @@ interface LikeDislikeProps {
   postId: string
   initialLikesCount?: number
   initialDislikesCount?: number
-  initialUserReaction?: "Like" | "Dislike" | null
+  initialUserReaction?: "LIKE" | "DISLIKE" | null
 }
 
 export default function LikeDislike({
@@ -20,7 +20,7 @@ export default function LikeDislike({
 }: LikeDislikeProps) {
   const [likesCount, setLikesCount] = useState(initialLikesCount)
   const [dislikesCount, setDislikesCount] = useState(initialDislikesCount)
-  const [userReaction, setUserReaction] = useState<"Like" | "Dislike" | null>(initialUserReaction)
+  const [userReaction, setUserReaction] = useState<"LIKE" | "DISLIKE" | null>(initialUserReaction)
   const [loading, setLoading] = useState(false)
   const { data: session } = useSession()
 
@@ -39,7 +39,7 @@ export default function LikeDislike({
     }
   }
 
-  const handleReaction = async (type: "Like" | "Dislike") => {
+  const handleReaction = async (type: "LIKE" | "DISLIKE") => {
     if (!session) return
 
     try {
@@ -73,9 +73,9 @@ export default function LikeDislike({
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant={userReaction === "Like" ? "default" : "outline"}
+        variant={userReaction === "LIKE" ? "default" : "outline"}
         size="sm"
-        onClick={() => handleReaction("Like")}
+        onClick={() => handleReaction("LIKE")}
         disabled={loading}
         className="flex items-center gap-1"
       >
@@ -84,9 +84,9 @@ export default function LikeDislike({
       </Button>
 
       <Button
-        variant={userReaction === "Dislike" ? "destructive" : "outline"}
+        variant={userReaction === "DISLIKE" ? "destructive" : "outline"}
         size="sm"
-        onClick={() => handleReaction("Dislike")}
+        onClick={() => handleReaction("DISLIKE")}
         disabled={loading}
         className="flex items-center gap-1"
       >
