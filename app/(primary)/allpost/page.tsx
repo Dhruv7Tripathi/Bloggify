@@ -79,7 +79,7 @@ export default function AllPosts() {
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <h1 className="text-3xl md:text-4xl font-bold">All Posts</h1>
-            <Button variant="outline" className="mt-2 md:mt-0 bg-transparent" onClick={() => router.push("/")}>
+            <Button variant="outline" className="mt-2 md:mt-0 bg-transparent" onClick={() => router.push("/blog")}>
               My Posts
             </Button>
           </div>
