@@ -1,5 +1,6 @@
 "use client"
-import { useEffect, useState } from "react"
+
+import { Suspense, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -13,7 +14,17 @@ interface Post {
   content: string
 }
 
-export default function WritePage() {
+function WritePageLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <p>Loading....</p>
+      </div>
+    </div>
+  )
+}
+
+function WritePageContent() {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(false)
   const { status } = useSession()
@@ -61,5 +72,13 @@ export default function WritePage() {
       postId={post?.id}
       onSave={() => router.push("/")}
     />
+  )
+}
+
+export default function WritePage() {
+  return (
+    <Suspense fallback={<WritePageLoading />}>
+      <WritePageContent />
+    </Suspense>
   )
 }

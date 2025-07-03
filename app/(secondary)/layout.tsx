@@ -1,5 +1,3 @@
-import "../globals.css";
-// import NavBar from "@/components/landingpage/navbar";
 import Footer from "@/components/landingpage/footer";
 export default function RootLayout({
   children,

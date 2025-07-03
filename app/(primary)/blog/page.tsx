@@ -1,17 +1,14 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Loader2, Share2, Pen, Menu } from "lucide-react"
+import { Loader2, Share2, Pen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import SharePostDialog from "@/components/(secondary)/share-post-dialog"
-// import NavigationSidebar from "@/components/(secondary)/sidebar"
 import UserPanel from "@/components/(secondary)/user-panel"
-import NavigationSidebar from "@/components/(secondary)/sidebar"
 
 interface Post {
   id: string
@@ -32,7 +29,7 @@ export default function Home() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [sharePost, setSharePost] = useState<Post | null>(null)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  // const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const { data: session, status } = useSession()
   const router = useRouter()
