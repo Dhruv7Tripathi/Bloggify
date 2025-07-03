@@ -90,7 +90,7 @@ export default function Comments({ postId }: CommentsProps) {
   }
 
   return (
-    <Card className="mt-8">
+    <Card className="mt-8 border-black" >
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <MessageCircle className="w-5 h-5" />
@@ -111,12 +111,18 @@ export default function Comments({ postId }: CommentsProps) {
                 placeholder="Write a comment..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="min-h-[80px]"
+                className="min-h-[40px] pr-28" // add right padding for button
                 disabled={submitting}
               />
-              <Button type="submit" disabled={submitting || !newComment.trim()}>
+              <Button
+                type="submit"
+                disabled={submitting || !newComment.trim()}
+                className="absolute bottom-2 right-2"
+                style={{ zIndex: 1 }}
+                size="sm"
+              >
                 {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
-                {submitting ? "Posting..." : "Post Comment"}
+                {submitting ? "Posting..." : "Post"}
               </Button>
             </div>
           </form>

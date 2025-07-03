@@ -143,8 +143,7 @@ export default function PostDetail() {
   return (
     <div className="flex min-h-screen">
       <div className="flex-1 ml-24 mr-16 container mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0" style={{ marginTop: "6rem", marginRight: "6rem" }}>
-
-        <Card className="max-w-4xl mx-auto">
+        <Card className="max-w-4xl border-black mx-auto">
           <CardHeader className="space-y-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
@@ -172,10 +171,10 @@ export default function PostDetail() {
               {post.title}
             </CardTitle>
             {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-medium">{post._count?.likes || 0} Likes</span>
-              <Separator orientation="vertical" className="h-4" />
-              <span className="font-medium">{post._count?.comments || 0} Comments</span>
-            </div> */}
+          <span className="font-medium">{post._count?.likes || 0} Likes</span>
+          <Separator orientation="vertical" className="h-4" />
+          <span className="font-medium">{post._count?.comments || 0} Comments</span>
+        </div> */}
             {isOwner && (
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={handleEdit}>
@@ -207,9 +206,8 @@ export default function PostDetail() {
               <LikeDislike postId={post.id} />
             </div>
           </CardContent>
+          <Separator className="my-6 w-30" />
         </Card>
-
-
         <div className="max-w-4xl mx-auto">
           <Comments postId={post.id} />
         </div>
