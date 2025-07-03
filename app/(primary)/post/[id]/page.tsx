@@ -194,7 +194,6 @@ export default function PostDetail() {
             )}
           </CardHeader>
 
-          {/* Content */}
           <CardContent className="text-gray-800 max-w-none">
             <div
               className="leading-relaxed text-white"
@@ -216,89 +215,6 @@ export default function PostDetail() {
         </div>
       </div>
 
-      {/* Custom Styles for Rich Content
-      <style jsx global>{`
-        .prose h1, .prose h2, .prose h3 {
-          font-weight: bold;
-          margin: 1.5rem 0 1rem 0;
-        }
-        
-        .prose h1 {
-          font-size: 2rem;
-        }
-        
-        .prose h2 {
-          font-size: 1.5rem;
-        }
-        
-        .prose h3 {
-          font-size: 1.25rem;
-        }
-        
-        .prose p {
-          margin: 1rem 0;
-        }
-        
-        .prose blockquote {
-          border-left: 4px solid #e5e7eb;
-          padding-left: 1rem;
-          margin: 1.5rem 0;
-          font-style: italic;
-          color: #6b7280;
-        }
-        
-        .prose ul, .prose ol {
-          padding-left: 2rem;
-          margin: 1rem 0;
-        }
-        
-        .prose li {
-          margin: 0.5rem 0;
-        }
-        
-        .prose a {
-          color: #3b82f6;
-          text-decoration: underline;
-        }
-        
-        .prose strong {
-          font-weight: bold;
-        }
-        
-        .prose em {
-          font-style: italic;
-        }
-        
-        .prose img {
-          max-width: 100%;
-          height: auto;
-          margin: 1.5rem 0;
-          border-radius: 0.5rem;
-        }
-        
-        .prose code {
-          background-color: #f3f4f6;
-          padding: 0.125rem 0.25rem;
-          border-radius: 0.25rem;
-          font-family: 'Courier New', monospace;
-          font-size: 0.875rem;
-        }
-        
-        .prose pre {
-          background-color: #1f2937;
-          color: #f9fafb;
-          padding: 1rem;
-          border-radius: 0.5rem;
-          overflow-x: auto;
-          margin: 1.5rem 0;
-        }
-        
-        .prose pre code {
-          background-color: transparent;
-          padding: 0;
-          color: inherit;
-        }
-      `}</style> */}
     </div>
   )
 }

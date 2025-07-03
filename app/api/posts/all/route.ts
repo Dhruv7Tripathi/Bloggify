@@ -18,6 +18,14 @@ export async function GET() {
             id: true,
             name: true,
             image: true,
+            comment: true,
+            likes: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
           },
         },
       },

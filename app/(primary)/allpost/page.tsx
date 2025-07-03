@@ -10,10 +10,7 @@ import axios, { type AxiosError } from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-// import NavigationSidebar from "@/components/(secondary)/sidebar"
 import LikeDislike from "@/components/(secondary)/likedislike"
-// import UserPanel from "@/components/(secondary)/user-panel"
-
 interface Post {
   id: string
   title: string
@@ -38,7 +35,6 @@ export default function AllPosts() {
   const [error, setError] = useState("")
   const { status } = useSession()
   const router = useRouter()
-
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signin")
@@ -51,6 +47,7 @@ export default function AllPosts() {
     try {
       setLoading(true)
       const response = await axios.get("/api/posts/all")
+      console.log("Fetched posts:", response.data)
       setPosts(response.data || [])
     } catch (error: unknown) {
       const axiosError = error as AxiosError<{ message: string }>
@@ -74,7 +71,6 @@ export default function AllPosts() {
 
   return (
     <div className="flex min-h-screen">
-      {/* <NavigationSidebar /> */}
       <div className="flex-1" style={{ marginLeft: "300px", marginRight: "300px" }}>
         <div className="container mt-24 mx-auto py-6 md:py-10 px-4 md:px-6 mb-16 md:mb-0">
 
@@ -123,6 +119,7 @@ export default function AllPosts() {
                         <div className="flex items-center gap-1 text-sm text-muted-foreground">
                           <MessageCircle className="w-4 h-4" />
                           <span>{post._count?.comments || 0}</span>
+
                         </div>
                       </div>
                     </CardFooter>

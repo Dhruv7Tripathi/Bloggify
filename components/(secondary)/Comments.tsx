@@ -25,6 +25,7 @@ interface Comment {
 
 interface CommentsProps {
   postId: string
+  onCountChange?: (count: number) => void
 }
 
 export default function Comments({ postId }: CommentsProps) {
