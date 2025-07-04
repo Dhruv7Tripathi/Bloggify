@@ -4,8 +4,8 @@ import Image from "next/image"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatedGroup } from "@/components/ui/animated-group"
-import Navbar from "./landingpage/navbar"
-import Footer from "./landingpage/footer"
+import Navbar from "./navbar"
+import Footer from "./footer"
 import { ContainerScroll } from "@/components/ui/container-scroll-animation"
 import { faqItems } from "@/contants/index"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -141,11 +141,11 @@ export function HeroSection() {
                             <div className="relative">
                                 <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-xl z-10" />
                                 <Image
-                                    src={`/blog.png`}
+                                    src={`/bloggify.png`}
                                     alt="Bloggify platform interface showcasing the intuitive blog creation experience"
                                     height={720}
                                     width={1400}
-                                    className="mx-auto rounded-xl object-cover h-full object-left-top shadow-2xl border border-border/20"
+                                    className="mx-auto rounded-xl object-left-top shadow-2xl"
                                     draggable={false}
                                 />
                             </div>
@@ -153,7 +153,7 @@ export function HeroSection() {
                     </div>
                 </section>
 
-                <section className="w-full py-20 sm:py-24 bg-gradient-to-b from-muted/30 to-background border-t border-border/50">
+                <section className="w-full py-20 sm:py-24 bg-black border-t border-border/50">
                     <div className="container px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-16">
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
