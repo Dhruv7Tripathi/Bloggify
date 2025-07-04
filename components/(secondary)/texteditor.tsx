@@ -144,7 +144,6 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
         contentRef.current.innerHTML += imageHtml
       }
 
-      // Update content state
       setContent(contentRef.current.innerHTML)
 
       // Focus back to editor
@@ -169,7 +168,6 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Handle Enter key for new paragraphs
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       document.execCommand("insertHTML", false, "<br><br>")
@@ -315,7 +313,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
               size="sm"
               variant="ghost"
               className="text-white hover:bg-gray-700 p-1 h-8 w-8"
-              onClick={() => applyFormat("insertImage")}
+              onClick={insertImage}
             >
               <ImageIcon className="w-4 h-4" />
             </Button>
