@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
 import type React from "react"
-
 import { MessageCircle, Trash2, Send, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -111,7 +110,7 @@ export default function Comments({ postId }: CommentsProps) {
                 placeholder="Write a comment..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="min-h-[40px] pr-28" // add right padding for button
+                className="min-h-[40px] pr-28"
                 disabled={submitting}
               />
               <Button

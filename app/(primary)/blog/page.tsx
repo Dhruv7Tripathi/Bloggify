@@ -116,43 +116,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background" style={{ marginRight: "250px" }}>
-      {/* Mobile Navigation */}
-      <div className="lg:hidden">
-        {/* <div className="flex items-center justify-between p-4 border-b">
-          <h1 className="text-xl font-bold">My Posts</h1>
-          <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64">
-              <NavigationSidebar />
-            </SheetContent>
-          </Sheet>
-        </div> */}
-      </div>
-
       <div className="flex">
-        {/* Desktop Sidebar */}
-        {/* <div className="hidden lg:block lg:w-64 lg:fixed lg:inset-y-0 lg:border-r">
-          <NavigationSidebar />
-        </div> */}
-
-        {/* Main Content */}
         <div className="flex-1 mt-24 lg:ml-64">
-          <div className="container mx-auto px-4 py-6 max-w-4xl">
-            {/* User Panel */}
-            {session && (
-              <div className="mb-6">
-                <UserPanel user={session.user} />
-              </div>
-            )}
+          <div className="mx-auto px-4 py-6 max-w-4xl">
 
-            {/* Header - Desktop */}
-            <div className="hidden lg:flex lg:flex-row justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold">My Posts</h1>
+            <div className="hidden lg:flex lg:flex-row  justify-between items-center">
+              {session && (
+                <div className="mb-6">
+                  <UserPanel user={session.user} />
+                </div>
+              )}
+              {/* <h1 className="text-3xl font-bold">My Posts</h1> */}
               <div className="flex gap-2">
                 <Button variant="default" onClick={() => router.push("/write")}>
                   <Pen className="w-4 h-4 mr-2" />

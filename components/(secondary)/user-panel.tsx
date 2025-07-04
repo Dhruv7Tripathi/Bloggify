@@ -24,7 +24,7 @@ export default function UserPanel({ user }: UserPanelProps) {
     return user.email?.[0].toUpperCase() || "U"
   }
   return (
-    <Card className="mb-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-blue-100 dark:border-gray-800">
+    <Card className="mb-6 bg-background dark:from-gray-800 dark:to-gray-900 border-black dark:border-black">
       <CardContent className="p-4 md:p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <Avatar className="h-12 w-12 border-2 border-blue-200 dark:border-gray-500">

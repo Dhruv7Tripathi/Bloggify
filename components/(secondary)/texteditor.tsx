@@ -8,6 +8,7 @@ import { Loader2, Plus, Bold, Italic, Link, ImageIcon, List, Quote } from "lucid
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
+import ImageUpload from "./imageupload"
 
 interface MediumEditorProps {
   initialTitle?: string
@@ -28,7 +29,7 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
   const contentRef = useRef<HTMLDivElement>(null)
   const { data: session } = useSession()
   const router = useRouter()
-
+  const [showImageUpload, setShowImageUpload] = useState(false)
   useEffect(() => {
     if (initialTitle || initialContent) {
       setTitle(initialTitle)
@@ -129,6 +130,33 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
     }
   }
 
+  const handleImageUploaded = (imageUrl: string) => {
+    const imageHtml = `<img src="${imageUrl}" alt="Uploaded image" style="max-width: 100%; height: auto; margin: 1rem 0; border-radius: 0.5rem;" />`
+
+    if (contentRef.current) {
+      // Insert image at cursor position or at the end
+      const selection = window.getSelection()
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0)
+        range.deleteContents()
+        range.insertNode(range.createContextualFragment(imageHtml))
+      } else {
+        contentRef.current.innerHTML += imageHtml
+      }
+
+      // Update content state
+      setContent(contentRef.current.innerHTML)
+
+      // Focus back to editor
+      contentRef.current.focus()
+    }
+  }
+
+  const insertImage = () => {
+    setShowImageUpload(true)
+    setShowToolbar(false)
+  }
+
   const applyFormat = (command: string, value?: string) => {
     document.execCommand(command, false, value)
     setShowToolbar(false)
@@ -189,9 +217,19 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
         />
 
         <div className="relative">
+
           <div className="flex items-center gap-2 mb-4 text-gray-400">
-            <Plus className="w-6 h-6" />
+            <Button
+              variant="default"
+              size="sm"
+              onClick={insertImage}
+              className="p-1 h-8 w-8 hover:bg-gray-100"
+              title="Insert Image"
+            >
+              <Plus className="w-6 h-6" />
+            </Button>
           </div>
+
 
           <div
             ref={contentRef}
@@ -284,62 +322,9 @@ export default function MediumEditor({ initialTitle = "", initialContent = "", p
           </div>
         )}
       </div>
-
-      {/* Custom Styles */}
-      <style jsx global>{`
-        [contenteditable]:empty:before {
-          content: attr(data-placeholder);
-          color: #9CA3AF;
-          pointer-events: none;
-        }
-        
-        [contenteditable] {
-          outline: none;
-        }
-        
-        [contenteditable] p {
-          margin: 1rem 0;
-        }
-        
-        [contenteditable] h1, [contenteditable] h2, [contenteditable] h3 {
-          font-weight: bold;
-          margin: 1.5rem 0 1rem 0;
-        }
-        
-        [contenteditable] h1 {
-          font-size: 2rem;
-        }
-        
-        [contenteditable] h2 {
-          font-size: 1.5rem;
-        }
-        
-        [contenteditable] h3 {
-          font-size: 1.25rem;
-        }
-        
-        [contenteditable] blockquote {
-          border-left: 4px solid #e5e7eb;
-          padding-left: 1rem;
-          margin: 1.5rem 0;
-          font-style: italic;
-          color: #6b7280;
-        }
-        
-        [contenteditable] ul, [contenteditable] ol {
-          padding-left: 2rem;
-          margin: 1rem 0;
-        }
-        
-        [contenteditable] li {
-          margin: 0.5rem 0;
-        }
-        
-        [contenteditable] a {
-          color: #3b82f6;
-          text-decoration: underline;
-        }
-      `}</style>
+      {showImageUpload && (
+        <ImageUpload onImageUploaded={handleImageUploaded} onClose={() => setShowImageUpload(false)} />
+      )}
     </div>
   )
 }
