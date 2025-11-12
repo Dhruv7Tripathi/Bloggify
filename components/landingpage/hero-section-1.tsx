@@ -1,14 +1,8 @@
 "use client"
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatedGroup } from "@/components/ui/animated-group"
-import Navbar from "./navbar"
-import Footer from "./footer"
-import { ContainerScroll } from "@/components/ui/container-scroll-animation"
-import { faqItems } from "@/contants/index"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 const transitionVariants = {
     item: {
@@ -33,7 +27,7 @@ const transitionVariants = {
 export function HeroSection() {
     return (
         <>
-            <main className="overflow-hidden">
+            <main className="overflow-hidden min-h-screen">
                 {/* Enhanced background gradients */}
                 <div
                     aria-hidden
@@ -128,59 +122,10 @@ export function HeroSection() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col overflow-hidden pb-16 pt-20 md:pt-32">
-                        <ContainerScroll
-                            titleComponent={
-                                <div className="text-center mb-8">
-                                    <h2 className="text-2xl md:text-3xl font-bold text-muted-foreground mb-2">Experience the Platform</h2>
-                                    <p className="text-muted-foreground/80">See how our intuitive interface makes blogging effortless</p>
-                                </div>
-                            }
-                        >
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-xl z-10" />
-                                <Image
-                                    src={`/bloggify.png`}
-                                    alt="Bloggify platform interface showcasing the intuitive blog creation experience"
-                                    height={720}
-                                    width={1400}
-                                    className="mx-auto rounded-xl object-left-top shadow-2xl"
-                                    draggable={false}
-                                />
-                            </div>
-                        </ContainerScroll>
-                    </div>
+
                 </section>
 
-                <section className="w-full py-20 sm:py-24 bg-black border-t border-border/50">
-                    <div className="container px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-16">
-                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                                Frequently Asked Questions
-                            </h2>
-                            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                                Everything you need to know about getting started with Bloggify
-                            </p>
-                        </div>
 
-                        <Accordion type="single" collapsible className="max-w-4xl mx-auto space-y-4">
-                            {faqItems.map((item, index) => (
-                                <AccordionItem
-                                    key={index}
-                                    value={`item-${index}`}
-                                    className="border border-border/50 rounded-lg px-6 bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-all duration-300"
-                                >
-                                    <AccordionTrigger className="text-left hover:no-underline sm:text-lg font-semibold py-6 text-foreground hover:text-primary transition-colors duration-200">
-                                        {item.question}
-                                    </AccordionTrigger>
-                                    <AccordionContent className="text-sm sm:text-base text-muted-foreground pb-6 leading-relaxed">
-                                        {item.answer}
-                                    </AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
-                </section>
             </main>
         </>
     )

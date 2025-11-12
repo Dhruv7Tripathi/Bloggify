@@ -85,10 +85,10 @@ const Footer = () => {
                   <h4 className="font-semibold text-foreground mb-4 sm:mb-6 text-base sm:text-lg">Navigation</h4>
                   <div className="flex flex-col space-y-3 sm:space-y-4">
                     {[
-                      { href: "#write", label: "Write" },
-                      { href: "#allpost", label: "Blogs" },
-                      { href: "#about", label: "About" },
-                      { href: "#contact", label: "Contact" },
+                      { href: "/write", label: "Write" },
+                      { href: "/allpost", label: "Blogs" },
+                      { href: "/about", label: "About" },
+                      { href: "/contactus", label: "Contact" },
                     ].map((link) => (
                       <Link
                         key={link.href}
