@@ -33,7 +33,6 @@ const transitionVariants = {
 export function HeroSection() {
     return (
         <>
-            <Navbar />
             <main className="overflow-hidden">
                 {/* Enhanced background gradients */}
                 <div
@@ -182,8 +181,6 @@ export function HeroSection() {
                         </Accordion>
                     </div>
                 </section>
-
-                <Footer />
             </main>
         </>
     )
